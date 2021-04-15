@@ -30,7 +30,7 @@ LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => (
-  <Tab.Navigator>
+  <Tab.Navigator initialRouteName="Home">
     <Tab.Screen
       name="Login"
       component={LoginScreen}
