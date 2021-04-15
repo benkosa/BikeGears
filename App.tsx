@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LogBox } from "react-native";
 import * as firebase from "firebase";
 import "firebase/firestore";
+import { AntDesign } from "@expo/vector-icons";
 
 import LoginScreen from "./app/screens/LoginScreen";
 import SavedScreen from "./app/screens/SavedScreen";
@@ -22,17 +23,38 @@ const firebaseConfig = {
 // Initialize Firebase
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
 }
 
+//ignorovanie warningu na androide
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => (
   <Tab.Navigator>
-    <Tab.Screen name="Login" component={LoginScreen} />
-    <Tab.Screen name="Home" component={LandingScreen} />
-    <Tab.Screen name="Saved" component={SavedScreen} />
+    <Tab.Screen
+      name="Login"
+      component={LoginScreen}
+      options={{
+        tabBarLabel: "Settings",
+        tabBarIcon: () => <AntDesign name="setting" size={24} color="black" />,
+      }}
+    />
+    <Tab.Screen
+      name="Home"
+      component={LandingScreen}
+      options={{
+        tabBarLabel: "Home",
+        tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
+      }}
+    />
+    <Tab.Screen
+      name="Saved"
+      component={SavedScreen}
+      options={{
+        tabBarLabel: "Saved",
+        tabBarIcon: () => <AntDesign name="save" size={24} color="black" />,
+      }}
+    />
   </Tab.Navigator>
 );
 
