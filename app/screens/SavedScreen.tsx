@@ -1,15 +1,13 @@
-
 import React, { Component } from "react";
 import { SafeAreaView, Text, StyleSheet } from "react-native";
 
-import firebase from 'firebase';
+import firebase from "firebase";
 
 class SavedScreen extends Component {
-
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
     this.state = {
-      isLogged: true
+      isLogged: true,
     };
   }
 
@@ -24,23 +22,22 @@ class SavedScreen extends Component {
     this.firebaseUnsubscribe();
   }
 
-  firebaseUnsubscribe:firebase.Unsubscribe = () => {};
+  firebaseUnsubscribe: firebase.Unsubscribe = () => {};
 
   /**
    * kontrola ci je uzivatel prihlaseny
    */
   checkIsLogged = () => {
-    this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) =>{
-      
-      if(user) {
-        this.setState({isLogged: true});
+    this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ isLogged: true });
         console.log("prihlaseny");
       } else {
-        this.setState({isLogged: false});
+        this.setState({ isLogged: false });
         console.log("neprihlaseny");
       }
-    })
-  }
+    });
+  };
 
   render() {
     console.log("render");
@@ -48,7 +45,7 @@ class SavedScreen extends Component {
       <SafeAreaView>
         <Text numberOfLines={2}>
           {/*@ts-ignore*/}
-          {this.state.isLogged ? 'prihlaseny' : 'neprihlaseny'}
+          {this.state.isLogged ? "prihlaseny" : "neprihlaseny"}
         </Text>
       </SafeAreaView>
     );
