@@ -1,6 +1,6 @@
 // @refresh state
 import React from "react";
-import LandingScreen from "./app/screens/LandingScreen";
+import LandingScreen from "./app/screens/LandingScreen/LandingScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LogBox } from "react-native";
