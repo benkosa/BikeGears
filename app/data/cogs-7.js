@@ -3891,3 +3891,4 @@ const cogs_7 = {
       ]
     }
   }
+  export default cogs_7;

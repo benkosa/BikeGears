@@ -2799,3 +2799,4 @@ const cogs_5 = {
     ]
   }
 }
+export default cogs_5;

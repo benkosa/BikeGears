@@ -9886,3 +9886,4 @@ const cogs_11 = {
       ]
     }
   }
+  export default cogs_11;

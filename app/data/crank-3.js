@@ -7510,3 +7510,4 @@ const crank_3 = {
       ]
     }
   }
+  export default crank_3;

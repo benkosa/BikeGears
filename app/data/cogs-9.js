@@ -5715,3 +5715,4 @@ const cogs_9 = {
       ]
     }
   }
+  export default cogs_9;

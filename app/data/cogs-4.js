@@ -2634,3 +2634,4 @@ const cogs_4 = {
     ]
   }
 }
+export default cogs_4;

@@ -3349,3 +3349,4 @@ const cogs_3 = {
       ]
     }
   }
+  export default cogs_3;

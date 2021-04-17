@@ -3976,3 +3976,4 @@ const cogs_12 = {
       ]
     }
   }
+  export default cogs_12;

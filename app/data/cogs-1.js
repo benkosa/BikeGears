@@ -7641,3 +7641,5 @@ const cogs_1 = {
       ]
     }
   }
+
+  export default cogs_1;
