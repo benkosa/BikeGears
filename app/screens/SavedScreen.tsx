@@ -3,6 +3,9 @@ import { SafeAreaView, Text, StyleSheet } from "react-native";
 
 import firebase from "firebase";
 
+/**
+ * oprazovka ulozenych
+ */
 class SavedScreen extends Component {
   constructor(props: any) {
     super(props);
@@ -50,7 +53,6 @@ class SavedScreen extends Component {
     return (
       <SafeAreaView>
         <Text numberOfLines={2}>
-          {/*@ts-ignore*/}
           {this.state.isLogged ? "prihlaseny" : "neprihlaseny"}
         </Text>
       </SafeAreaView>

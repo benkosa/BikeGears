@@ -7,6 +7,11 @@ import RNPickerSelect from "react-native-picker-select";
 import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
 
+
+/**
+ * zakladna oprazovka, volenie atributov
+ * pre vypocet gear ratia
+ */
 class LandingScreen extends Component {
   constructor(props: any) {
     super(props);

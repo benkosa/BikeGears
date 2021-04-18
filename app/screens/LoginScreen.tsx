@@ -3,6 +3,9 @@ import { SafeAreaView, Text, StyleSheet, Button } from "react-native";
 import * as Google from "expo-google-app-auth";
 import * as firebase from "firebase";
 
+/**
+ * oprazovka nastaveni
+ */
 class LoginScreen extends Component {
   isUserEqual = (googleUser: any, firebaseUser: any) => {
     if (firebaseUser) {
