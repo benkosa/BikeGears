@@ -40,7 +40,6 @@ class SavedScreen extends Component {
   };
 
   render() {
-    console.log("render");
     return (
       <SafeAreaView>
         <Text numberOfLines={2}>

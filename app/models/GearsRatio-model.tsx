@@ -9,6 +9,6 @@ interface GearsRatioTable {
 
 interface GearsRatioTableProps {
     wheelSize: number,
-    crank: Array<string>,
-    casete: Array<string>
+    crank: string,
+    casete: string
 }

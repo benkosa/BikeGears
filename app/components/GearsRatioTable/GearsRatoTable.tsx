@@ -13,10 +13,12 @@ import styles from "./GearsRatioTable-style";
 function GearsRatioTable(props: GearsRatioTableProps) {
   const calculateGearsRatio = (
     wheelSize: number,
-    crank: Array<string>,
-    casete: Array<string>
+    crankS: string,
+    caseteS: string
   ): number[][] => {
     let gearRatio = [];
+    const crank = crankS.split("-");
+    const casete = caseteS.split("-");
     for (let i = 0; i < casete.length; i++) {
       gearRatio[i] = new Array(crank.length).fill(0);
       for (let j = 0; j < crank.length; j++)
@@ -36,8 +38,8 @@ function GearsRatioTable(props: GearsRatioTableProps) {
   const min = gearRatio[gearRatio.length - 1][0];
 
   const table: GearsRatioTable = {
-    tableHead: [""].concat(props.crank),
-    tableTitle: props.casete,
+    tableHead: [""].concat(props.crank.split("-")),
+    tableTitle: props.casete.split("-"),
     tableData: gearRatio,
 
     table2Title: ["Max", "Min"],
