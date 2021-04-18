@@ -86,7 +86,6 @@ class LandingScreen extends Component {
   };
   render() {
     const state = this.state;
-    /*@ts-ignore*/
     let showTable = state.showTable;
     const actual = this.actual;
     return (
@@ -117,10 +116,8 @@ class LandingScreen extends Component {
                   actual.crank = value;
                   this.showData(actual);
                 }}
-                /*@ts-ignore*/
                 value={state.crank}
                 placeholder={label("Select crank type")}
-                /*@ts-ignore*/
                 items={state.crankSizes}
               />
             </View>
@@ -131,7 +128,6 @@ class LandingScreen extends Component {
                   this.showData(actual);
                 }}
                 placeholder={label("Select cassette size")}
-                /*@ts-ignore*/
                 items={cassetteSize}
               />
               <RNPickerSelect
@@ -139,10 +135,8 @@ class LandingScreen extends Component {
                   actual.cassette = value;
                   this.showData(actual);
                 }}
-                /*@ts-ignore*/
                 value={state.cassette}
                 placeholder={label("Select cassette type")}
-                /*@ts-ignore*/
                 items={state.cassetteSizes}
               />
             </View>
@@ -150,9 +144,7 @@ class LandingScreen extends Component {
           {showTable && (
             <GearsRatioTable
               wheelSize={1.04}
-              //@ts-ignore
               crank={state.crank}
-              //@ts-ignore
               cassette={state.cassette}
             ></GearsRatioTable>
           )}

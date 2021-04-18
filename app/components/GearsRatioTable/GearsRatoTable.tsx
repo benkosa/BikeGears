@@ -47,7 +47,7 @@ function GearsRatioTable(props: GearsRatioTableProps) {
   const gearRatio = calculateGearsRatio(
     props.wheelSize,
     props.crank,
-    props.casete
+    props.cassette
   );
   const max = gearRatio[0][gearRatio[0].length - 1];
   const min = gearRatio[gearRatio.length - 1][0];
@@ -57,7 +57,7 @@ function GearsRatioTable(props: GearsRatioTableProps) {
    */
   const table: GearsRatioTable = {
     tableHead: [""].concat(props.crank.split("-")),
-    tableTitle: props.casete.split("-"),
+    tableTitle: props.cassette.split("-"),
     tableData: gearRatio,
 
     table2Title: ["Max", "Min"],

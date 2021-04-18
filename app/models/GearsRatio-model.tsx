@@ -10,7 +10,7 @@ interface GearsRatioTable {
 interface GearsRatioTableProps {
   wheelSize: number;
   crank: string;
-  casete: string;
+  cassette: string;
 }
 
 interface PickerItem {
