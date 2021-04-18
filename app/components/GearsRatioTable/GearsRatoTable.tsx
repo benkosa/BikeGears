@@ -10,7 +10,22 @@ import {
 
 import styles from "./GearsRatioTable-style";
 
+/**
+ * komponent zobrazi tabulku gear ratio podla
+ * navolenych parametrov
+ * @param props 
+ * @returns 
+ */
 function GearsRatioTable(props: GearsRatioTableProps) {
+  /**
+   * Funkcia vypocita gear ratio podla navolenych
+   * parametrov
+   * 
+   * @param wheelSize 
+   * @param crankS 
+   * @param caseteS 
+   * @returns 
+   */
   const calculateGearsRatio = (
     wheelSize: number,
     crankS: string,
@@ -37,6 +52,9 @@ function GearsRatioTable(props: GearsRatioTableProps) {
   const max = gearRatio[0][gearRatio[0].length - 1];
   const min = gearRatio[gearRatio.length - 1][0];
 
+  /**
+   * pripravene date pre tabulku
+   */
   const table: GearsRatioTable = {
     tableHead: [""].concat(props.crank.split("-")),
     tableTitle: props.casete.split("-"),

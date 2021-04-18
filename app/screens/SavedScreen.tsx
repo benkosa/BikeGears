@@ -18,10 +18,17 @@ class SavedScreen extends Component {
     this.checkIsLogged();
   }
 
+  /**
+   * vola sa pri zahadzivani komponentu
+   */
   componentWillUnmount() {
     this.firebaseUnsubscribe();
   }
 
+  /**
+   * pointer na firebase auth
+   * aby sa dal zmazat
+   */
   firebaseUnsubscribe: firebase.Unsubscribe = () => {};
 
   /**

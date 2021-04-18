@@ -1,99 +1,82 @@
 import React, { Component } from "react";
-import {
-  SafeAreaView,
-  View,
-  ScrollView,
-  Button,
-  TouchableWithoutFeedback,
-  Text,
-} from "react-native";
+import { SafeAreaView, View, ScrollView, Button } from "react-native";
 
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
 import styles from "./LandingScreen-style";
 import RNPickerSelect from "react-native-picker-select";
-import Casete from "../../data/casete";
+import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
 
 class LandingScreen extends Component {
-  
   constructor(props: any) {
-    
     super(props);
-    let caseteTable: { label: string; value: string }[] = [];
-    this.casete[0].forEach((cog) => {
-      caseteTable.push({ label: cog.td, value: cog.td });
-    });
-
     this.state = {
       crank: "",
-      casete: "",
-      caseteTable: [],
+      cassette: "",
       showTable: false,
-      wheel: false,
+      wheel: 1.04,
       cassetteSizes: [],
       crankSizes: [],
     };
   }
-
-  casete = Casete;
+  /**
+   * offilne data pre kazetu a crank
+   */
+  cassette = Cassette;
   crank = Crank;
 
-  placeholder = {
-    label: "Select a sport...",
-    value: null,
-    color: "#9EA0A4",
-  };
-
+  /**
+   * funkcia riadi ci sa ma zobrazovat tabulka
+   * na landingu
+   * ktory set zubov na kazete sa ma zobrazit
+   * @param actual
+   */
   showData = (actual: ActualSetup) => {
-    console.log(actual);
-    let showTable = true;
     if (actual.wheelSize != "0") {
       this.state = {
-        wheel: actual.wheelSize
-      }
+        wheel: actual.wheelSize,
+      };
     }
-    
     if (actual.crankSize != "0") {
-      let caseteTable: { label: string; value: string }[] = [];
-      const test = +actual.crankSize-1;
+      let cassetteTable: { label: string; value: string }[] = [];
+      const test = +actual.crankSize - 1;
       this.crank[test].forEach((cog) => {
-        caseteTable.push({ label: cog.td, value: cog.td });
+        cassetteTable.push({ label: cog.td, value: cog.td });
       });
-      this.setState({ crankSizes: caseteTable });
+      this.setState({ crankSizes: cassetteTable });
     } else {
       this.setState({ crankSizes: [], crank: "0" });
     }
-    
     if (actual.cassetteSize != "0") {
-      let caseteTable: { label: string; value: string }[] = [];
-      this.casete[+actual.cassetteSize-1].forEach((cog) => {
-        caseteTable.push({ label: cog.td, value: cog.td });
+      let cassetteTable: { label: string; value: string }[] = [];
+      this.cassette[+actual.cassetteSize - 1].forEach((cog) => {
+        cassetteTable.push({ label: cog.td, value: cog.td });
       });
-      this.setState({ cassetteSizes: caseteTable });
-    }else {
-      this.setState({ cassetteSizes: [], casete: "0" });
+      this.setState({ cassetteSizes: cassetteTable });
+    } else {
+      this.setState({ cassetteSizes: [], cassette: "0" });
     }
-
-    if(actual.cassette != "0") {
-      this.setState({ casete: actual.cassette });
-    } 
-
-    if(actual.crank != "0") {
+    if (actual.cassette != "0") {
+      this.setState({ cassette: actual.cassette });
+    }
+    if (actual.crank != "0") {
       this.setState({ crank: actual.crank });
     }
-
-    if(
+    if (
       actual.wheelSize != "0" &&
       actual.crankSize != "0" &&
       actual.cassetteSize != "0" &&
       actual.crank != "0" &&
-      actual.cassette != "0") {
-        this.setState({ showTable: true });
+      actual.cassette != "0"
+    ) {
+      this.setState({ showTable: true });
     } else {
       this.setState({ showTable: false });
     }
-
   };
+  /**
+   * aktualne navolene data
+   */
   actual = {
     wheelSize: "0",
     crankSize: "0",
@@ -104,7 +87,7 @@ class LandingScreen extends Component {
   render() {
     const state = this.state;
     /*@ts-ignore*/
-    let test = this.state.showTable;
+    let showTable = state.showTable;
     const actual = this.actual;
     return (
       <SafeAreaView>
@@ -135,7 +118,7 @@ class LandingScreen extends Component {
                   this.showData(actual);
                 }}
                 /*@ts-ignore*/
-                value={(state.crank)}
+                value={state.crank}
                 placeholder={label("Select crank type")}
                 /*@ts-ignore*/
                 items={state.crankSizes}
@@ -149,7 +132,7 @@ class LandingScreen extends Component {
                 }}
                 placeholder={label("Select cassette size")}
                 /*@ts-ignore*/
-                items={caseteSize}
+                items={cassetteSize}
               />
               <RNPickerSelect
                 onValueChange={(value) => {
@@ -157,20 +140,20 @@ class LandingScreen extends Component {
                   this.showData(actual);
                 }}
                 /*@ts-ignore*/
-                value={(state.casete)}
+                value={state.cassette}
                 placeholder={label("Select cassette type")}
                 /*@ts-ignore*/
                 items={state.cassetteSizes}
               />
             </View>
           </View>
-          {test && (
+          {showTable && (
             <GearsRatioTable
               wheelSize={1.04}
               //@ts-ignore
               crank={state.crank}
               //@ts-ignore
-              casete={state.casete}
+              cassette={state.cassette}
             ></GearsRatioTable>
           )}
           <View style={styles.saveBtn}>
@@ -199,25 +182,14 @@ const crankSize = [
   { label: "3", value: "3" },
 ];
 
-let caseteSize: any = [];
+let cassetteSize: Array<PickerItem> = [];
 for (let i = 1; i <= 13; i++) {
-  caseteSize.push({ label: i + "", value: i + "" });
+  cassetteSize.push({ label: i + "", value: i + "" });
 }
 
-interface PickerItem {
-  label: string;
-  value: string;
-  color: string;
-}
-
-interface ActualSetup {
-  wheelSize: string;
-  crankSize: string;
-  cassetteSize: string;
-  crank: string;
-  cassette: string;
-}
-
+/**
+ * picker item label
+ */
 const label = (name: string): PickerItem => {
   return { label: name, color: "#9EA0A4", value: "0" };
 };
