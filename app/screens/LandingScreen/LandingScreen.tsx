@@ -6,6 +6,7 @@ import styles from "./LandingScreen-style";
 import RNPickerSelect from "react-native-picker-select";
 import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
+import SaveModal from "../../components/SaveModal/SaveModal";
 
 
 /**
@@ -82,7 +83,7 @@ class LandingScreen extends Component {
   /**
    * aktualne navolene data
    */
-  actual = {
+  actual: ActualSetup = {
     wheelSize: "0",
     crankSize: "0",
     cassetteSize: "0",
@@ -153,9 +154,7 @@ class LandingScreen extends Component {
               cassette={state.cassette}
             ></GearsRatioTable>
           )}
-          <View style={styles.saveBtn}>
-            <Button title="Save" onPress={() => console.log("save")}></Button>
-          </View>
+          <SaveModal setup={actual} isLogged={true}></SaveModal>
         </ScrollView>
       </SafeAreaView>
     );

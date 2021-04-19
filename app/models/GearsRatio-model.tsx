@@ -27,6 +27,13 @@ interface ActualSetup {
   cassette: string;
 }
 
-interface LoginButton {
-  title: string
+type LoginButton = {
+  title: string,
+  onPress?(): void,
+  disabled?: boolean
+}
+
+interface saveModalProps {
+  setup: ActualSetup;
+  isLogged: boolean
 }

@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "react-native";
+import { Button } from "react-native-elements";
 import * as Google from "expo-google-app-auth";
 import * as firebase from "firebase";
-
+import { AntDesign } from "@expo/vector-icons";
 function LoginButton(props: LoginButton) {
   const isUserEqual = (googleUser: any, firebaseUser: any) => {
     if (firebaseUser) {
@@ -44,6 +44,9 @@ function LoginButton(props: LoginButton) {
             if (result.additionalUserInfo?.isNewUser) {
               //zapiseme si noveho usera do firebase database
             }
+            try {
+              if (props.onPress) props.onPress();
+            } catch (e) {}
           })
           .catch((error) => {
             // Handle Errors here.
@@ -83,10 +86,16 @@ function LoginButton(props: LoginButton) {
   };
 
   return (
-    <Button
-      title={props.title}
-      onPress={() => signInWithGoogleAsync()}
-    />
+    <>
+      <Button
+        title={props.title}
+        onPress={() => signInWithGoogleAsync()}
+        disabled={props.disabled}
+        icon= {(
+          <AntDesign name="google" size={24} color="black" />
+        )}
+      />
+    </>
   );
 }
 
