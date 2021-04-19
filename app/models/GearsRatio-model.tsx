@@ -26,3 +26,7 @@ interface ActualSetup {
   crank: string;
   cassette: string;
 }
+
+interface LoginButton {
+  title: string
+}
