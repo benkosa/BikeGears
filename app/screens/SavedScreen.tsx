@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { SafeAreaView, Text, StyleSheet } from "react-native";
 
 import firebase from "firebase";
+import LoginButton from "../components/LoginButton/LoginButton";
 
 /**
  * oprazovka ulozenych
@@ -52,9 +53,12 @@ class SavedScreen extends Component {
   render() {
     return (
       <SafeAreaView>
-        <Text numberOfLines={2}>
-          {this.state.isLogged ? "prihlaseny" : "neprihlaseny"}
-        </Text>
+        {!this.state.isLogged &&
+          <LoginButton title="Sign in with google"></LoginButton>
+        }
+        {this.state.isLogged &&
+          <></>
+        }
       </SafeAreaView>
     );
   }
