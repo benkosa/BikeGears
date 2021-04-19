@@ -84,7 +84,7 @@ function LoginButton(props: LoginButton) {
 
   return (
     <Button
-      title="Sign in With Google"
+      title={props.title}
       onPress={() => signInWithGoogleAsync()}
     />
   );

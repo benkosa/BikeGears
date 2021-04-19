@@ -22,7 +22,7 @@ class SavedScreen extends Component {
   }
 
   /**
-   * vola sa pri zahadzivani komponentu
+   * vola sa pri zahadzovani komponentu
    */
   componentWillUnmount() {
     this.firebaseUnsubscribe();

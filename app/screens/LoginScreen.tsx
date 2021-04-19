@@ -10,7 +10,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <SafeAreaView>
-        <LoginButton title="Sign in with google"></LoginButton>
+        <LoginButton title="Sign in with google"/>
         <Button title="Sign out" onPress={() => firebase.auth().signOut()} />
       </SafeAreaView>
     );
