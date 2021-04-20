@@ -112,7 +112,7 @@ class LandingScreen extends Component {
     const actual = this.actual;
     return (
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView style={{height: "100%"}}>
           <View style={styles.menu}>
             <View style={styles.menuItem}>
               <RNPickerSelect
