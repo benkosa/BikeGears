@@ -58,14 +58,14 @@ class SaveModal extends Component<saveModalProps> {
                   onChangeText={(value) => this.setState({ text: value })}
                   defaultValue={this.state.text}
                 />
-                {this.props.isLogged && (
+                {!this.props.isLogged && (
                   <LoginButton
                     title="Sign in and save"
                     onPress={() => {this.setModalVisible(!modalVisible); console.log(this.props.setup);}}
                     disabled={this.state.text == ""}
                   ></LoginButton>
                 )}
-                {!this.props.isLogged && (
+                {this.props.isLogged && (
                   <Button
                     onPress={() => {
                       this.setModalVisible(!modalVisible);

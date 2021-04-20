@@ -15,40 +15,18 @@ class SavedScreen extends Component {
     };
   }
 
-  /**
-   * vola sa pri vytvoreni componentu
-   */
   componentDidMount() {
-    this.checkIsLogged();
+    this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ isLogged: user != null });
+    });
   }
 
-  /**
-   * vola sa pri zahadzovani komponentu
-   */
+
   componentWillUnmount() {
     this.firebaseUnsubscribe();
   }
-
-  /**
-   * pointer na firebase auth
-   * aby sa dal zmazat
-   */
+  
   firebaseUnsubscribe: firebase.Unsubscribe = () => {};
-
-  /**
-   * kontrola ci je uzivatel prihlaseny
-   */
-  checkIsLogged = () => {
-    this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ isLogged: true });
-        console.log("prihlaseny");
-      } else {
-        this.setState({ isLogged: false });
-        console.log("neprihlaseny");
-      }
-    });
-  };
 
   render() {
     return (

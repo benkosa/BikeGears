@@ -7,6 +7,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
 import SaveModal from "../../components/SaveModal/SaveModal";
+import * as firebase from "firebase";
 
 
 /**
@@ -23,8 +24,23 @@ class LandingScreen extends Component {
       wheel: 1.04,
       cassetteSizes: [],
       crankSizes: [],
+      isLogged: true,
     };
   }
+
+  componentDidMount() {
+    this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ isLogged: user != null });
+    });
+  }
+
+
+  componentWillUnmount() {
+    this.firebaseUnsubscribe();
+  }
+  
+  firebaseUnsubscribe: firebase.Unsubscribe = () => {};
+
   /**
    * offilne data pre kazetu a crank
    */
@@ -154,7 +170,7 @@ class LandingScreen extends Component {
               cassette={state.cassette}
             ></GearsRatioTable>
           )}
-          <SaveModal setup={actual} isLogged={true}></SaveModal>
+          <SaveModal setup={actual} isLogged={state.isLogged}></SaveModal>
         </ScrollView>
       </SafeAreaView>
     );
