@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
@@ -11,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import LoginButton from "../LoginButton/LoginButton";
+import * as firebase from "firebase";
 
 class SaveModal extends Component<saveModalProps> {
   constructor(props: saveModalProps) {
@@ -20,6 +20,17 @@ class SaveModal extends Component<saveModalProps> {
       text: ""
     };
   }
+
+  handleSend = async () => {
+    const token = firebase.auth().currentUser?.uid;
+
+    if (token) {
+      firebase.firestore().collection("setup_"+token).add({
+        title: this.state.text,
+        setup: this.props.setup,
+      });
+    }
+  };
 
   setModalVisible = (visible: boolean) => {
     this.setState({ modalVisible: visible });
@@ -61,7 +72,10 @@ class SaveModal extends Component<saveModalProps> {
                 {!this.props.isLogged && (
                   <LoginButton
                     title="Sign in and save"
-                    onPress={() => {this.setModalVisible(!modalVisible); console.log(this.props.setup);}}
+                    onPress={() => {
+                      this.setModalVisible(!modalVisible);
+                      this.handleSend();
+                    }}
                     disabled={this.state.text == ""}
                   ></LoginButton>
                 )}
@@ -69,7 +83,7 @@ class SaveModal extends Component<saveModalProps> {
                   <Button
                     onPress={() => {
                       this.setModalVisible(!modalVisible);
-                      console.log(this.props.setup);
+                      this.handleSend();
                     }}
                     title="Save"
                     disabled={this.state.text == ""}
