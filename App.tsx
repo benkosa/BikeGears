@@ -11,6 +11,12 @@ import { AntDesign } from "@expo/vector-icons";
 import LoginScreen from "./app/screens/LoginScreen";
 import SavedScreen from "./app/screens/SavedScreen";
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import friendsReducer from "./app/store/GlobalReducer";
+
+const store = createStore(friendsReducer);
+
 const firebaseConfig = {
   apiKey: "AIzaSyDk-p75QX33j-G0Kj_p-CoeX7hTNV-_96I",
   authDomain: "bikegears-282f0.firebaseapp.com",
@@ -60,8 +66,10 @@ const TabNavigator = () => (
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }

@@ -9,7 +9,6 @@ import Crank from "../../data/crank";
 import SaveModal from "../../components/SaveModal/SaveModal";
 import * as firebase from "firebase";
 
-
 /**
  * zakladna oprazovka, volenie atributov
  * pre vypocet gear ratia
@@ -34,11 +33,10 @@ class LandingScreen extends Component {
     });
   }
 
-
   componentWillUnmount() {
     this.firebaseUnsubscribe();
   }
-  
+
   firebaseUnsubscribe: firebase.Unsubscribe = () => {};
 
   /**
@@ -112,11 +110,11 @@ class LandingScreen extends Component {
     const actual = this.actual;
     return (
       <SafeAreaView>
-        <ScrollView style={{height: "100%"}}>
+        <ScrollView style={{ height: "100%" }}>
           <View style={styles.menu}>
             <View style={styles.menuItem}>
               <RNPickerSelect
-                onValueChange={(value) => {
+                onValueChange={(value: string) => {
                   actual.wheelSize = value;
                   this.showData(actual);
                 }}
@@ -126,7 +124,7 @@ class LandingScreen extends Component {
             </View>
             <View style={styles.menuItem}>
               <RNPickerSelect
-                onValueChange={(value) => {
+                onValueChange={(value: string) => {
                   actual.crankSize = value;
                   this.showData(actual);
                 }}
@@ -134,7 +132,7 @@ class LandingScreen extends Component {
                 items={crankSize}
               />
               <RNPickerSelect
-                onValueChange={(value) => {
+                onValueChange={(value: string) => {
                   actual.crank = value;
                   this.showData(actual);
                 }}
@@ -145,7 +143,7 @@ class LandingScreen extends Component {
             </View>
             <View style={styles.menuItem}>
               <RNPickerSelect
-                onValueChange={(value) => {
+                onValueChange={(value: string) => {
                   actual.cassetteSize = value;
                   this.showData(actual);
                 }}
@@ -153,7 +151,7 @@ class LandingScreen extends Component {
                 items={cassetteSize}
               />
               <RNPickerSelect
-                onValueChange={(value) => {
+                onValueChange={(value: string) => {
                   actual.cassette = value;
                   this.showData(actual);
                 }}

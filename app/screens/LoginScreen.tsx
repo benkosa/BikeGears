@@ -3,6 +3,8 @@ import { SafeAreaView, Button } from "react-native";
 import * as firebase from "firebase";
 import LoginButton from "../components/LoginButton/LoginButton";
 
+import { connect } from 'react-redux';
+
 /**
  * oprazovka nastaveni
  */
@@ -27,6 +29,7 @@ class LoginScreen extends Component {
   firebaseUnsubscribe: firebase.Unsubscribe = () => {};
 
   render() {
+    console.log(this.props.global.user);
     return (
       <SafeAreaView>
         {!this.state.isLogged && <LoginButton title="Sign in with google" />}
@@ -38,4 +41,11 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+const mapStateToProps = (state: { global: any; }) => {
+  const { global } = state
+  return { global }
+};
+
+export default connect(mapStateToProps)(LoginScreen);
+
+//export default LoginScreen;

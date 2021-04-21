@@ -1,10 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button } from "react-native-elements";
 import * as Google from "expo-google-app-auth";
 import * as firebase from "firebase";
 import { AntDesign } from "@expo/vector-icons";
-function LoginButton(props: LoginButton) {
-  const isUserEqual = (googleUser: any, firebaseUser: any) => {
+
+import { addUser } from "../../store/GlobalActions";
+import { connect } from "react-redux";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
+
+class LoginButton extends Component<LoginButtonProps> {
+  constructor(props: LoginButtonProps) {
+    super(props);
+    this.state = {};
+  }
+  isUserEqual = (googleUser: any, firebaseUser: any) => {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
       for (var i = 0; i < providerData.length; i++) {
@@ -21,13 +30,13 @@ function LoginButton(props: LoginButton) {
     return false;
   };
 
-  const onSignIn = (googleUser: any) => {
+  onSignIn = (googleUser: any) => {
     console.log("Google Auth Response", googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
       unsubscribe();
       // Check if we are already signed-in Firebase with the correct user.
-      if (!isUserEqual(googleUser, firebaseUser)) {
+      if (!this.isUserEqual(googleUser, firebaseUser)) {
         // Build Firebase credential with the Google ID token.
         var credential = firebase.auth.GoogleAuthProvider.credential(
           //googleUser.getAuthResponse().id_token
@@ -39,13 +48,14 @@ function LoginButton(props: LoginButton) {
         firebase
           .auth()
           .signInWithCredential(credential)
-          .then(function (result) {
+          .then((result) => {
             console.log("user signed in");
             if (result.additionalUserInfo?.isNewUser) {
               //zapiseme si noveho usera do firebase database
             }
+            this.props.addUser(result.additionalUserInfo?.profile);
             try {
-              if (props.onPress) props.onPress();
+              if (this.props.onPress) this.props.onPress();
             } catch (e) {}
           })
           .catch((error) => {
@@ -64,7 +74,7 @@ function LoginButton(props: LoginButton) {
     });
   };
 
-  const signInWithGoogleAsync = async () => {
+  signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
         //androidClientId: YOUR_CLIENT_ID_HERE,
@@ -75,7 +85,7 @@ function LoginButton(props: LoginButton) {
       });
 
       if (result.type === "success") {
-        onSignIn(result);
+        this.onSignIn(result);
         return result.accessToken;
       } else {
         return { cancelled: true };
@@ -85,18 +95,36 @@ function LoginButton(props: LoginButton) {
     }
   };
 
-  return (
-    <>
-      <Button
-        title={props.title}
-        onPress={() => signInWithGoogleAsync()}
-        disabled={props.disabled}
-        icon= {(
-          <AntDesign name="google" size={24} color="black" />
-        )}
-      />
-    </>
-  );
+  render() {
+    return (
+      <>
+        <Button
+          title={this.props.title}
+          onPress={() => this.signInWithGoogleAsync()}
+          disabled={this.props.disabled}
+          icon={<AntDesign name="google" size={24} color="black" />}
+        />
+      </>
+    );
+  }
 }
 
-export default LoginButton;
+//export default LoginButton;
+
+const mapStateToProps = (state: LoginButtonProps) => {
+  const global = state;
+  return global;
+};
+
+const mapDispatchToProps = (
+  dispatch: Dispatch<AnyAction>,
+  ownProps: LoginButtonProps
+) =>
+  bindActionCreators(
+    {
+      addUser,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginButton);
