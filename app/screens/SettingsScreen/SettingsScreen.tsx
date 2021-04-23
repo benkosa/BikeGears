@@ -67,29 +67,30 @@ class SettingsScreen extends Component {
     return (
       <SafeAreaView>
         {!this.state.isLogged && <LoginButton title={language["sk"].SIGN_IN} />}
-        
 
         <ListItem bottomDivider topDivider>
           <ListItem.Content>
             <ListItem.Title>{language["sk"].LANG_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
-            onPress={(value) => this.updateLanguage(value)}
-            selectedIndex={this.state.selectedLanguage}
-            buttons={language["sk"].LANG_BTN}
-            containerStyle={{}}
-          />
+              onPress={(value) => this.updateLanguage(value)}
+              selectedIndex={this.state.selectedLanguage}
+              buttons={language["sk"].LANG_BTN}
+              containerStyle={{}}
+            />
           </ListItem.Content>
         </ListItem>
 
         <ListItem bottomDivider>
           <ListItem.Content>
-            <ListItem.Title>{language["sk"].HOMESCREEN_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title>
+              {language["sk"].HOMESCREEN_BTN_TITLE}
+            </ListItem.Title>
             <ButtonGroup
-            onPress={(value) => this.updateHomeScreen(value)}
-            selectedIndex={this.state.selectedHomeScreen}
-            buttons={language["sk"].HOMESCREEN_BTN}
-            containerStyle={{}}
-          />
+              onPress={(value) => this.updateHomeScreen(value)}
+              selectedIndex={this.state.selectedHomeScreen}
+              buttons={language["sk"].HOMESCREEN_BTN}
+              containerStyle={{}}
+            />
           </ListItem.Content>
         </ListItem>
 
@@ -97,11 +98,11 @@ class SettingsScreen extends Component {
           <ListItem.Content>
             <ListItem.Title>{language["sk"].APIRENCE_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
-            onPress={(value) => this.updateApirence(value)}
-            selectedIndex={this.state.selectedApirence}
-            buttons={language["sk"].APIRENCE_BTN}
-            containerStyle={{}}
-          />
+              onPress={(value) => this.updateApirence(value)}
+              selectedIndex={this.state.selectedApirence}
+              buttons={language["sk"].APIRENCE_BTN}
+              containerStyle={{}}
+            />
           </ListItem.Content>
         </ListItem>
 
