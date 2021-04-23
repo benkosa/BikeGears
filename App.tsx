@@ -66,22 +66,27 @@ const TabNavigator = () => (
 );
 
 AsyncStorage.getItem("selectedLanguage").then((data) => {
+  const lang: { [key: string]: string } = { "0": "sk", "1": "en" };
   if (data == null) {
-    AsyncStorage.setItem("selectedHomeScreen", "1");
+    AsyncStorage.setItem("selectedLanguage", "1");
+    store.getState().global.selectedLanguage = 1;
+    store.getState().global.appLang = lang["1"];
+  } else {
+    store.getState().global.selectedLanguage = +data;
+    store.getState().global.appLang = lang[data];
   }
-  console.log(data);
 });
 AsyncStorage.getItem("selectedHomeScreen").then((data) => {
   if (data == null) {
     AsyncStorage.setItem("selectedHomeScreen", "1");
-  }
-  console.log(data);
+    store.getState().global.selectedHomeScreen = 1;
+  } else store.getState().global.selectedHomeScreen = +data;
 });
 AsyncStorage.getItem("selectedApirence").then((data) => {
   if (data == null) {
     AsyncStorage.setItem("selectedApirence", "0");
-  }
-  console.log(data);
+    store.getState().global.selectedApirence = 0;
+  } else store.getState().global.selectedApirence = +data;
 });
 
 export default function App() {

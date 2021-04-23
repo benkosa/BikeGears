@@ -9,19 +9,21 @@ import {
 import { combineReducers } from "redux";
 
 interface InitialState {
-  current: Array<string>,
-  user: {},
-  selectedLanguage: string,
-  selectedHomeScreen: string,
-  selectedApirence: string,
+  current: Array<string>;
+  user: {};
+  selectedLanguage: number;
+  appLang: string;
+  selectedHomeScreen: number;
+  selectedApirence: number;
 }
 
 const INITIAL_STATE: InitialState = {
   current: [],
   user: {},
-  selectedLanguage: "",
-  selectedHomeScreen: "",
-  selectedApirence: "",
+  selectedLanguage: 1,
+  appLang: "en",
+  selectedHomeScreen: 1,
+  selectedApirence: 0,
 };
 
 const globalReducer = (state = INITIAL_STATE, action: any) => {
@@ -57,9 +59,11 @@ const globalReducer = (state = INITIAL_STATE, action: any) => {
 
       return newHomeScreenState;
     case SET_LANGUAGE:
+      const lang: { [key: string]: string } = { "0": "sk", "1": "en" };
       let newLanguageState = { ...state };
 
       newLanguageState.selectedLanguage = action.payload;
+      newLanguageState.appLang = lang[action.payload + ""];
 
       return newLanguageState;
     default:

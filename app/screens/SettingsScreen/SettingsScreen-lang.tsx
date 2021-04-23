@@ -1,4 +1,15 @@
-const en = {
+interface SettingsScreen {
+    SIGN_IN: string;
+    SIGN_OUT: string;
+    LANG_BTN: string[];
+    LANG_BTN_TITLE: string;
+    HOMESCREEN_BTN: string[];
+    HOMESCREEN_BTN_TITLE: string;
+    APIRENCE_BTN: string[];
+    APIRENCE_BTN_TITLE: string;
+}
+
+const en: SettingsScreen = {
   SIGN_IN: "Sign in with google",
   SIGN_OUT: "Sign out",
 
@@ -12,7 +23,7 @@ const en = {
   APIRENCE_BTN_TITLE: "App apirence: ",
 };
 
-const sk = {
+const sk: SettingsScreen = {
   SIGN_IN: "Prihlásiť sa cez Google",
   SIGN_OUT: "Odhlásiť sa",
 
@@ -26,4 +37,9 @@ const sk = {
   APIRENCE_BTN_TITLE: "Vzhľad aplikácie: ",
 };
 
-export default { sk, en };
+const language: { [key: string]: SettingsScreen } = {
+    "sk": sk,
+    "en": en
+}
+
+export default language;

@@ -8,6 +8,12 @@ import language from "./SettingsScreen-lang";
 import { connect } from "react-redux";
 import { ButtonGroup, Button, Text, ListItem } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
+import {
+  setApirence,
+  setHomeScreen,
+  setLanguage,
+} from "../../store/GlobalActions";
 
 /**
  * oprazovka nastaveni
@@ -21,22 +27,26 @@ class SettingsScreen extends Component {
       selectedHomeScreen: 1,
       selectedApirence: 0,
     };
-    this.getProfile();
+    //this.getProfile();
   }
 
   updateLanguage(selectedLanguage: number) {
     this.setState({ selectedLanguage });
     AsyncStorage.setItem("selectedLanguage", selectedLanguage + "");
+    this.props.setLanguage(selectedLanguage);
   }
 
   updateHomeScreen(selectedHomeScreen: number) {
     this.setState({ selectedHomeScreen });
     AsyncStorage.setItem("selectedHomeScreen", selectedHomeScreen + "");
+    this.props.setHomeScreen(selectedHomeScreen);
+    this.forceUpdate();
   }
 
   updateApirence(selectedApirence: number) {
     this.setState({ selectedApirence });
     AsyncStorage.setItem("selectedApirence", selectedApirence + "");
+    this.props.setApirence(selectedApirence);
   }
 
   getProfile = () => {
@@ -68,17 +78,21 @@ class SettingsScreen extends Component {
   firebaseUnsubscribe: firebase.Unsubscribe = () => {};
 
   render() {
+    const globalStore = this.props.global;
+    const state = this.state;
+    const lang: string = globalStore.appLang;
+
     return (
       <SafeAreaView>
-        {!this.state.isLogged && <LoginButton title={language["sk"].SIGN_IN} />}
+        {!state.isLogged && <LoginButton title={language[lang].SIGN_IN} />}
 
         <ListItem bottomDivider topDivider>
           <ListItem.Content>
-            <ListItem.Title>{language["sk"].LANG_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title>{language[lang].LANG_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateLanguage(value)}
-              selectedIndex={this.state.selectedLanguage}
-              buttons={language["sk"].LANG_BTN}
+              selectedIndex={globalStore.selectedLanguage}
+              buttons={language[lang].LANG_BTN}
               containerStyle={{}}
             />
           </ListItem.Content>
@@ -87,12 +101,12 @@ class SettingsScreen extends Component {
         <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title>
-              {language["sk"].HOMESCREEN_BTN_TITLE}
+              {language[lang].HOMESCREEN_BTN_TITLE}
             </ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateHomeScreen(value)}
-              selectedIndex={this.state.selectedHomeScreen}
-              buttons={language["sk"].HOMESCREEN_BTN}
+              selectedIndex={globalStore.selectedHomeScreen}
+              buttons={language[lang].HOMESCREEN_BTN}
               containerStyle={{}}
             />
           </ListItem.Content>
@@ -100,19 +114,19 @@ class SettingsScreen extends Component {
 
         <ListItem bottomDivider>
           <ListItem.Content>
-            <ListItem.Title>{language["sk"].APIRENCE_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title>{language[lang].APIRENCE_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateApirence(value)}
-              selectedIndex={this.state.selectedApirence}
-              buttons={language["sk"].APIRENCE_BTN}
+              selectedIndex={globalStore.selectedApirence}
+              buttons={language[lang].APIRENCE_BTN}
               containerStyle={{}}
             />
           </ListItem.Content>
         </ListItem>
 
-        {this.state.isLogged && (
+        {state.isLogged && (
           <Button
-            title={language["sk"].SIGN_OUT}
+            title={language[lang].SIGN_OUT}
             onPress={() => firebase.auth().signOut()}
           />
         )}
@@ -126,4 +140,14 @@ const mapStateToProps = (state: { global: any }) => {
   return { global };
 };
 
-export default connect(mapStateToProps)(SettingsScreen);
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      setApirence,
+      setHomeScreen,
+      setLanguage,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

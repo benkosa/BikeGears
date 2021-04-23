@@ -1,4 +1,10 @@
-import { ADD_FRIEND, ADD_USER } from "./GlobalActionsTypes";
+import {
+  ADD_FRIEND,
+  ADD_USER,
+  SET_APIRENCE,
+  SET_HOMESCREEN,
+  SET_LANGUAGE,
+} from "./GlobalActionsTypes";
 
 export const addFriend = (friendsIndex: string) => ({
   type: ADD_FRIEND,
@@ -11,16 +17,16 @@ export const addUser = (user: any) => ({
 });
 
 export const setLanguage = (language: any) => ({
-  type: ADD_USER,
+  type: SET_LANGUAGE,
   payload: language,
 });
 
-export const setHomeScreen = (gomeScreen: any) => ({
-  type: ADD_USER,
-  payload: gomeScreen,
+export const setHomeScreen = (homeScreen: number) => ({
+  type: SET_HOMESCREEN,
+  payload: homeScreen,
 });
 
-export const setApirence = (apirence: any) => ({
-  type: ADD_USER,
+export const setApirence = (apirence: number) => ({
+  type: SET_APIRENCE,
   payload: apirence,
 });
