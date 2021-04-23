@@ -1,16 +1,27 @@
-import { ADD_FRIEND } from "./GlobalActionsTypes";
-import { ADD_USER} from "./GlobalActionsTypes";
+import {
+  ADD_FRIEND,
+  ADD_USER,
+  SET_APIRENCE,
+  SET_HOMESCREEN,
+  SET_LANGUAGE,
+} from "./GlobalActionsTypes";
 
 import { combineReducers } from "redux";
 
 interface InitialState {
-  current: Array<string>;
-  user: {}
+  current: Array<string>,
+  user: {},
+  selectedLanguage: string,
+  selectedHomeScreen: string,
+  selectedApirence: string,
 }
 
 const INITIAL_STATE: InitialState = {
   current: [],
-  user: {}
+  user: {},
+  selectedLanguage: "",
+  selectedHomeScreen: "",
+  selectedApirence: "",
 };
 
 const globalReducer = (state = INITIAL_STATE, action: any) => {
@@ -28,12 +39,29 @@ const globalReducer = (state = INITIAL_STATE, action: any) => {
 
       return newFriendsState;
     case ADD_USER:
-        
       let newUserState = { ...state };
 
       newUserState.user = action.payload;
 
       return newUserState;
+    case SET_APIRENCE:
+      let newApirenceState = { ...state };
+
+      newApirenceState.selectedApirence = action.payload;
+
+      return newApirenceState;
+    case SET_HOMESCREEN:
+      let newHomeScreenState = { ...state };
+
+      newHomeScreenState.selectedHomeScreen = action.payload;
+
+      return newHomeScreenState;
+    case SET_LANGUAGE:
+      let newLanguageState = { ...state };
+
+      newLanguageState.selectedLanguage = action.payload;
+
+      return newLanguageState;
     default:
       return state;
   }
