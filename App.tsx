@@ -14,6 +14,7 @@ import SavedScreen from "./app/screens/SavedScreen";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import friendsReducer from "./app/store/GlobalReducer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const store = createStore(friendsReducer);
 
@@ -63,6 +64,25 @@ const TabNavigator = () => (
     />
   </Tab.Navigator>
 );
+
+AsyncStorage.getItem("selectedLanguage").then((data) => {
+  if (data == null) {
+    AsyncStorage.setItem("selectedHomeScreen", "1");
+  }
+  console.log(data);
+});
+AsyncStorage.getItem("selectedHomeScreen").then((data) => {
+  if (data == null) {
+    AsyncStorage.setItem("selectedHomeScreen", "1");
+  }
+  console.log(data);
+});
+AsyncStorage.getItem("selectedApirence").then((data) => {
+  if (data == null) {
+    AsyncStorage.setItem("selectedApirence", "0");
+  }
+  console.log(data);
+});
 
 export default function App() {
   return (

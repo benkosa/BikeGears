@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import * as firebase from "firebase";
 import LoginButton from "../../components/LoginButton/LoginButton";
 
@@ -7,6 +7,7 @@ import language from "./SettingsScreen-lang";
 
 import { connect } from "react-redux";
 import { ButtonGroup, Button, Text, ListItem } from "react-native-elements";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * oprazovka nastaveni
@@ -25,14 +26,17 @@ class SettingsScreen extends Component {
 
   updateLanguage(selectedLanguage: number) {
     this.setState({ selectedLanguage });
+    AsyncStorage.setItem("selectedLanguage", selectedLanguage + "");
   }
 
   updateHomeScreen(selectedHomeScreen: number) {
     this.setState({ selectedHomeScreen });
+    AsyncStorage.setItem("selectedHomeScreen", selectedHomeScreen + "");
   }
 
   updateApirence(selectedApirence: number) {
     this.setState({ selectedApirence });
+    AsyncStorage.setItem("selectedApirence", selectedApirence + "");
   }
 
   getProfile = () => {
