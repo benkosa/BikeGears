@@ -14,7 +14,26 @@ class LoginScreen extends Component {
     this.state = {
       isLogged: true,
     };
+    this.getProfile();
   }
+
+  getProfile = () => {
+    console.log("bol som tu")
+    const token = firebase.auth().currentUser?.uid;
+    console.log(token)
+    if (token) {
+      firebase
+        .firestore()
+        .collection("profile")
+        .doc(token)
+        .get()
+        .then((doc) => {
+          console.log(doc.data());
+        });
+    }
+  };
+  
+  
 
   componentDidMount() {
     this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {

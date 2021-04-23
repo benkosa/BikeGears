@@ -53,6 +53,7 @@ class LoginButton extends Component<LoginButtonProps> {
             if (result.additionalUserInfo?.isNewUser) {
               //zapiseme si noveho usera do firebase database
             }
+            this.handleSendNewUserData(result.additionalUserInfo?.profile);
             this.props.addUser(result.additionalUserInfo?.profile);
             try {
               if (this.props.onPress) this.props.onPress();
@@ -92,6 +93,19 @@ class LoginButton extends Component<LoginButtonProps> {
       }
     } catch (e) {
       return { error: true };
+    }
+  };
+
+  handleSendNewUserData = async (data: any) => {
+    const token = firebase.auth().currentUser?.uid;
+
+    if (token) {
+      firebase.firestore().collection("profile").doc(token).set({
+        name: data.name,
+        emal: data.email,
+        picture: data.picture,
+        locale: data.locale,
+      });
     }
   };
 
