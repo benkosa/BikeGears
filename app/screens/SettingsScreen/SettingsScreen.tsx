@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, StatusBar, View } from "react-native";
 import * as firebase from "firebase";
 import LoginButton from "../../components/LoginButton/LoginButton";
 
 import language from "./SettingsScreen-lang";
 
 import { connect } from "react-redux";
-import { ButtonGroup, Button, Text, ListItem } from "react-native-elements";
+import { ButtonGroup, Button, ListItem } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import {
@@ -14,6 +14,7 @@ import {
   setHomeScreen,
   setLanguage,
 } from "../../store/GlobalActions";
+import Style from "./SettingsScreen-style"
 
 /**
  * oprazovka nastaveni
@@ -81,54 +82,71 @@ class SettingsScreen extends Component {
     const globalStore = this.props.global;
     const state = this.state;
     const lang: string = globalStore.appLang;
+    const a: number = globalStore.selectedApirence;
 
     return (
-      <SafeAreaView>
+      <SafeAreaView style={Style[a].container}>
+      {a == 0 && <StatusBar  barStyle="dark-content" translucent={true} />}
+      {a != 0 && <StatusBar  barStyle="light-content" translucent={true} />}
         {!state.isLogged && <LoginButton title={language[lang].SIGN_IN} />}
 
-        <ListItem bottomDivider>
+        <ListItem bottomDivider containerStyle={Style[a].background}>
           <ListItem.Content>
-            <ListItem.Title>{language[lang].LANG_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title style={Style[a].text}>{language[lang].LANG_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateLanguage(value)}
               selectedIndex={globalStore.selectedLanguage}
               buttons={language[lang].LANG_BTN}
-              containerStyle={{}}
+              buttonStyle={Style[a].buttonPasive}
+              selectedButtonStyle={Style[a].button}
+              containerStyle={Style[a].border}
+              innerBorderStyle={Style[a].innerBorder}
             />
           </ListItem.Content>
         </ListItem>
 
-        <ListItem bottomDivider>
+        <ListItem bottomDivider containerStyle={Style[a].background}>
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title style={Style[a].text}>
               {language[lang].HOMESCREEN_BTN_TITLE}
             </ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateHomeScreen(value)}
               selectedIndex={globalStore.selectedHomeScreen}
               buttons={language[lang].HOMESCREEN_BTN}
-              containerStyle={{}}
+              buttonStyle={Style[a].buttonPasive}
+              selectedButtonStyle={Style[a].button}
+              containerStyle={Style[a].border}
+              innerBorderStyle={Style[a].innerBorder}
             />
           </ListItem.Content>
         </ListItem>
 
-        <ListItem bottomDivider>
+        <ListItem bottomDivider containerStyle={Style[a].background}>
           <ListItem.Content>
-            <ListItem.Title>{language[lang].APIRENCE_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title style={Style[a].text}>{language[lang].APIRENCE_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateApirence(value)}
               selectedIndex={globalStore.selectedApirence}
               buttons={language[lang].APIRENCE_BTN}
-              containerStyle={{}}
+              buttonStyle={Style[a].buttonPasive}
+              selectedButtonStyle={Style[a].button}
+              containerStyle={Style[a].border}
+              innerBorderStyle={Style[a].innerBorder}
             />
           </ListItem.Content>
         </ListItem>
 
         {state.isLogged && (
-          <Button
-            title={language[lang].SIGN_OUT}
-            onPress={() => firebase.auth().signOut()}
-          />
+          <View
+            style={Style[a].signOutContainer}
+          >
+            <Button
+              title={language[lang].SIGN_OUT}
+              onPress={() => firebase.auth().signOut()}
+              buttonStyle={Style[a].buttonPasive}
+            />
+          </View>
         )}
       </SafeAreaView>
     );
