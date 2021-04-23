@@ -8,7 +8,7 @@ import * as firebase from "firebase";
 import "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
 
-import LoginScreen from "./app/screens/LoginScreen";
+import SettingsScreen from "./app/screens/SettingsScreen/SettingsScreen";
 import SavedScreen from "./app/screens/SavedScreen";
 
 import { Provider } from "react-redux";
@@ -39,7 +39,7 @@ const TabNavigator = () => (
   <Tab.Navigator initialRouteName="Home">
     <Tab.Screen
       name="Login"
-      component={LoginScreen}
+      component={SettingsScreen}
       options={{
         tabBarLabel: "Settings",
         tabBarIcon: () => <AntDesign name="setting" size={24} color="black" />,
