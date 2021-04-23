@@ -1,22 +1,16 @@
 // @refresh state
 import React from "react";
-import LandingScreen from "./app/screens/LandingScreen/LandingScreen";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LogBox } from "react-native";
 import * as firebase from "firebase";
 import "firebase/firestore";
-import { AntDesign } from "@expo/vector-icons";
-
-import SettingsScreen from "./app/screens/SettingsScreen/SettingsScreen";
-import SavedScreen from "./app/screens/SavedScreen";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import friendsReducer from "./app/store/GlobalReducer";
+import globalStore from "./app/store/GlobalReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BottomTab from "./app/components/BottomTab/BottomTab";
 
-const store = createStore(friendsReducer);
+const store = createStore(globalStore);
 
 const firebaseConfig = {
   apiKey: "AIzaSyDk-p75QX33j-G0Kj_p-CoeX7hTNV-_96I",
@@ -34,38 +28,6 @@ if (firebase.apps.length === 0) {
 
 //ignorovanie warningu na androide
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
-
-const Tab = createBottomTabNavigator();
-const TabNavigator = () => (
-  <Tab.Navigator
-    initialRouteName="Home"
-    tabBarOptions={{
-      showLabel: false,
-    }}
-  >
-    <Tab.Screen
-      name="Login"
-      component={SettingsScreen}
-      options={{
-        tabBarIcon: () => <AntDesign name="setting" size={24} color="black" />,
-      }}
-    />
-    <Tab.Screen
-      name="Home"
-      component={LandingScreen}
-      options={{
-        tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
-      }}
-    />
-    <Tab.Screen
-      name="Saved"
-      component={SavedScreen}
-      options={{
-        tabBarIcon: () => <AntDesign name="save" size={24} color="black" />,
-      }}
-    />
-  </Tab.Navigator>
-);
 
 AsyncStorage.getItem("selectedLanguage").then((data) => {
   const lang: { [key: string]: string } = { "0": "sk", "1": "en" };
@@ -94,9 +56,7 @@ AsyncStorage.getItem("selectedApirence").then((data) => {
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <TabNavigator />
-      </NavigationContainer>
+      <BottomTab></BottomTab>
     </Provider>
   );
 }
