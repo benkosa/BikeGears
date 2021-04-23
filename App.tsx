@@ -37,12 +37,16 @@ LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => (
-  <Tab.Navigator initialRouteName="Home">
+  <Tab.Navigator
+    initialRouteName="Home"
+    tabBarOptions={{
+      showLabel: false,
+    }}
+  >
     <Tab.Screen
       name="Login"
       component={SettingsScreen}
       options={{
-        tabBarLabel: "Settings",
         tabBarIcon: () => <AntDesign name="setting" size={24} color="black" />,
       }}
     />
@@ -50,7 +54,6 @@ const TabNavigator = () => (
       name="Home"
       component={LandingScreen}
       options={{
-        tabBarLabel: "Home",
         tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
       }}
     />
@@ -58,7 +61,6 @@ const TabNavigator = () => (
       name="Saved"
       component={SavedScreen}
       options={{
-        tabBarLabel: "Saved",
         tabBarIcon: () => <AntDesign name="save" size={24} color="black" />,
       }}
     />

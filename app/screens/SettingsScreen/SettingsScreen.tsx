@@ -86,7 +86,7 @@ class SettingsScreen extends Component {
       <SafeAreaView>
         {!state.isLogged && <LoginButton title={language[lang].SIGN_IN} />}
 
-        <ListItem bottomDivider topDivider>
+        <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Title>{language[lang].LANG_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
