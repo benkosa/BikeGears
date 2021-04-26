@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Text,
-  Pressable,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Button,
-} from "react-native";
+import { Modal, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { Button } from "react-native-elements";
 import LoginButton from "../LoginButton/LoginButton";
 import * as firebase from "firebase";
 
@@ -103,12 +96,12 @@ class SaveModal extends Component<saveModalProps> {
             </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
-        <Pressable
-          style={[style.button, style.buttonOpen]}
-          onPress={() => this.setModalVisible(true)}
-        >
-          <Text style={style.textStyle}>{lang.SAVE_BTN}</Text>
-        </Pressable>
+        {this.props.showButton &&
+          <Button
+            onPress={() => this.setModalVisible(true)}
+            title={lang.SAVE_BTN}
+          />
+        }
       </View>
     );
   }

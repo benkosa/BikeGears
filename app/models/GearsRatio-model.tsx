@@ -36,4 +36,5 @@ type LoginButtonProps = {
 interface saveModalProps {
   setup: ActualSetup;
   isLogged: boolean;
+  showButton: boolean;
 }

@@ -246,7 +246,7 @@ class LandingScreen extends Component {
               cassette={state.cassette}
             ></GearsRatioTable>
           )}
-          <SaveModal setup={actual} isLogged={state.isLogged}></SaveModal>
+          <SaveModal setup={actual} isLogged={state.isLogged} showButton={showTable}></SaveModal>
         </ScrollView>
       </SafeAreaView>
     );
