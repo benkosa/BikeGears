@@ -10,7 +10,7 @@ const light = StyleSheet.create({
       justifyContent: "space-between"
     },
     menuItem: {
-      height: 150,
+      height: 155,
       paddingTop: 2,
       backgroundColor: "white",
       flex: 1,
@@ -27,13 +27,16 @@ const light = StyleSheet.create({
       paddingTop: 13,
       fontWeight: "bold",
     },
+    text: {
+
+    }
   });
 
   const dark = StyleSheet.create({
     ...light,
     menuItem: {
       ...light.menuItem,
-      backgroundColor: darkc.primary_shade
+      backgroundColor: darkc.secondary_shade
     },
     label: {
       ...light.label,
