@@ -12,6 +12,7 @@ import LoginButton from "../LoginButton/LoginButton";
 import * as firebase from "firebase";
 
 import styles from "./SaveModal-style";
+import language from "./SaveModal-lang";
 import darkc from "../../colors";
 import { connect } from "react-redux";
 
@@ -46,6 +47,7 @@ class SaveModal extends Component<saveModalProps> {
     const { modalVisible } = this.state;
     const styleId = +this.props.global.selectedApirence;
     const style = styles[styleId];
+    const lang = language[this.props.global.appLang];
 
     return (
       <View>
@@ -73,13 +75,13 @@ class SaveModal extends Component<saveModalProps> {
               <View style={style.modalView}>
                 <TextInput
                   style={{ height: 40 }}
-                  placeholder="Setup name"
+                  placeholder={lang.SETUP_NAME}
                   onChangeText={(value) => this.setState({ text: value })}
                   defaultValue={this.state.text}
                 />
                 {!this.props.isLogged && (
                   <LoginButton
-                    title="Sign in and save"
+                    title={lang.SAVE_SIGN_BTN}
                     onPress={() => {
                       this.setModalVisible(!modalVisible);
                       this.handleSend();
@@ -93,7 +95,7 @@ class SaveModal extends Component<saveModalProps> {
                       this.setModalVisible(!modalVisible);
                       this.handleSend();
                     }}
-                    title="Save"
+                    title={lang.SAVE_BTN}
                     disabled={this.state.text == ""}
                   />
                 )}
@@ -105,7 +107,7 @@ class SaveModal extends Component<saveModalProps> {
           style={[style.button, style.buttonOpen]}
           onPress={() => this.setModalVisible(true)}
         >
-          <Text style={style.textStyle}>Save</Text>
+          <Text style={style.textStyle}>{lang.SAVE_BTN}</Text>
         </Pressable>
       </View>
     );
