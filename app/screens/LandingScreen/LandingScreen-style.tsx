@@ -1,7 +1,8 @@
 
 import { StyleSheet } from "react-native";
+import darkc from "../../colors";
 
-const LandingScreenStyles = StyleSheet.create({
+const light = StyleSheet.create({
     menu: {
       height: 150,
       flex: 1,
@@ -10,17 +11,34 @@ const LandingScreenStyles = StyleSheet.create({
     },
     menuItem: {
       height: 150,
-      width: "28%",
-      backgroundColor: "gold",
-    },
-    saveBtn: {
-      height: 50,
-      backgroundColor: "tomato"
+      paddingTop: 2,
+      backgroundColor: "white",
+      flex: 1,
+      alignItems: 'center',
     },
     image: {
       width: 60,
       height: 60.
+    },
+    addView: {
+      flexDirection: "row",
+    },
+    label: {
+      paddingTop: 13,
+      fontWeight: "bold",
+    },
+  });
+
+  const dark = StyleSheet.create({
+    ...light,
+    menuItem: {
+      ...light.menuItem,
+      backgroundColor: darkc.primary_shade
+    },
+    label: {
+      ...light.label,
+      color: darkc.light
     }
   });
 
-  export default LandingScreenStyles;
+  export default [light, dark];

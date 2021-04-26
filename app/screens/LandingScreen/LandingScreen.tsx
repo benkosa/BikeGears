@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { SafeAreaView, View, ScrollView } from "react-native";
 
-import { Image } from "react-native-elements";
+import { Image, Text } from "react-native-elements";
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
-import styles from "./LandingScreen-style";
+import style from "./LandingScreen-style";
+import darkc from "../../colors";
 import RNPickerSelect from "react-native-picker-select";
 import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
@@ -49,9 +50,9 @@ class LandingScreen extends Component {
   crank = Crank;
 
   /**
-   * funkcia riadi ci sa ma zobrazovat tabulka
-   * na landingu
-   * ktory set zubov na kazete sa ma zobrazit
+   * funkcia riadi:
+   * - ci sa ma zobrazovat tabulka na landingu
+   * - ktory set zubov na kazete sa ma zobrazit
    * @param actual
    */
   showData = (actual: ActualSetup) => {
@@ -109,83 +110,133 @@ class LandingScreen extends Component {
     cassette: "0",
   };
 
+  caseteLabel = (casete: string): string => {
+    if(casete == "0") return "";
+
+    const caseteArray = casete.split("-");
+    if (caseteArray.length <= 2) {
+      return casete;
+    }
+    return caseteArray[0] + ".." + caseteArray[caseteArray.length - 1];
+  };
+
   render() {
     const state = this.state;
     let showTable = state.showTable;
     const actual = this.actual;
+    const styleId = +this.props.global.selectedApirence;
+    const styles = style[styleId];
     return (
       <SafeAreaView>
         <ScrollView style={{ height: "100%" }}>
           <View style={styles.menu}>
+            {/** vyber velkosti kolesa */}
             <View style={styles.menuItem}>
               <Image
                 source={require("../../assets/icons/wheel.png")}
                 style={styles.image}
               />
-              <RNPickerSelect
-                onValueChange={(value: string) => {
-                  actual.wheelSize = value;
-                  this.showData(actual);
-                }}
-                placeholder={label("Select wheel size")}
-                items={wheelSize}
-              >
-                <AntDesign name="plussquareo" size={44} color="black" />
-              </RNPickerSelect>
+              <View>
+                <RNPickerSelect
+                  onValueChange={(value: string) => {
+                    actual.wheelSize = value;
+                    this.showData(actual);
+                  }}
+                  items={wheelSize}
+                >
+                  <View style={styles.addView}>
+                    <Text style={styles.label}>
+                      {actual.wheelSize != "0" ? actual.wheelSize : ""}
+                    </Text>
+                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                  </View>
+                </RNPickerSelect>
+              </View>
             </View>
+            {/** vyber velkosti stredu */}
             <View style={styles.menuItem}>
               <Image
                 source={require("../../assets/icons/crankset.png")}
                 style={styles.image}
               />
-              <RNPickerSelect
-                onValueChange={(value: string) => {
-                  actual.crankSize = value;
-                  this.showData(actual);
-                }}
-                placeholder={label("Select crank size")}
-                items={crankSize}
+              <View>
+                <RNPickerSelect
+                  onValueChange={(value: string) => {
+                    actual.crankSize = value;
+                    this.showData(actual);
+                  }}
+                  placeholder={label("Select crank size")}
+                  items={crankSize}
                 >
-                <AntDesign name="plussquareo" size={44} color="black" />
-              </RNPickerSelect>
-              <RNPickerSelect
-                onValueChange={(value: string) => {
-                  actual.crank = value;
-                  this.showData(actual);
-                }}
-                value={state.crank}
-                placeholder={label("Select crank type")}
-                items={state.crankSizes}
+                  <View style={styles.addView}>
+                    <Text style={styles.label}>
+                      {actual.crankSize != "0" ? actual.crankSize : ""}
+                    </Text>
+                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                  </View>
+                </RNPickerSelect>
+              </View>
+              <View>
+                <RNPickerSelect
+                  onValueChange={(value: string) => {
+                    actual.crank = value;
+                    this.showData(actual);
+                  }}
+                  value={state.crank}
+                  placeholder={label("Select crank type")}
+                  items={state.crankSizes}
                 >
-                <AntDesign name="plussquareo" size={44} color="black" />
-              </RNPickerSelect>
+                  <View style={styles.addView}>
+                    <Text style={styles.label}>
+                      {actual.crank != "0" ? actual.crank : ""}
+                    </Text>
+                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                  </View>
+                </RNPickerSelect>
+              </View>
             </View>
+            {/** vyber velkosti kazety */}
             <View style={styles.menuItem}>
               <Image
                 source={require("../../assets/icons/cassette.png")}
                 style={styles.image}
               />
-              <RNPickerSelect
-                onValueChange={(value: string) => {
-                  actual.cassetteSize = value;
-                  this.showData(actual);
-                }}
-                placeholder={label("Select cassette size")}
-                items={cassetteSize}
+              <View>
+                <RNPickerSelect
+                  onValueChange={(value: string) => {
+                    actual.cassetteSize = value;
+                    this.showData(actual);
+                  }}
+                  placeholder={label("Select cassette size")}
+                  items={cassetteSize}
                 >
-                <AntDesign name="plussquareo" size={44} color="black" />
-              </RNPickerSelect>
-              <RNPickerSelect
-                onValueChange={(value: string) => {
-                  actual.cassette = value;
-                  this.showData(actual);
-                }}
-                value={state.cassette}
-                placeholder={label("Select cassette type")}
-                items={state.cassetteSizes}
+                  <View style={styles.addView}>
+                    <Text style={styles.label}>
+                      {actual.cassetteSize != "0" ? actual.cassetteSize : ""}
+                    </Text>
+                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                  </View>
+                </RNPickerSelect>
+              </View>
+
+              <View>
+                <RNPickerSelect
+                  onValueChange={(value: string) => {
+                    actual.cassette = value;
+                    this.showData(actual);
+                  }}
+                  value={state.cassette}
+                  placeholder={label("Select cassette type")}
+                  items={state.cassetteSizes}
                 >
-                <AntDesign name="plussquareo" size={44} color="black" />
-              </RNPickerSelect>
+                  <View style={styles.addView}>
+                    <Text style={styles.label}>
+                      {this.caseteLabel(actual.cassette)}
+                    </Text>
+                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                  </View>
+                </RNPickerSelect>
+              </View>
             </View>
           </View>
           {showTable && (
@@ -211,7 +262,7 @@ export default connect(mapStateToProps)(LandingScreen);
 
 const wheelSize = [
   { label: "26", value: "26" },
-  { label: "27.5", value: "27" },
+  { label: "27.5", value: "27.5" },
   { label: "29", value: "29" },
   { label: "28", value: "28" },
   { label: "20", value: "20" },
