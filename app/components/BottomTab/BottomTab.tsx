@@ -6,7 +6,7 @@ import "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
 
 import SettingsScreen from "../../../app/screens/SettingsScreen/SettingsScreen";
-import SavedScreen from "../../../app/screens/SavedScreen";
+import SavedScreen from "../../screens/SaveScreen/SavedScreen";
 
 import { connect } from "react-redux";
 

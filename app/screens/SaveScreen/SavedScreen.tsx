@@ -3,10 +3,11 @@ import { SafeAreaView, ScrollView, View } from "react-native";
 import { Text } from 'react-native-elements';
 
 import firebase from "firebase";
-import LoginButton from "../components/LoginButton/LoginButton";
+import LoginButton from "../../components/LoginButton/LoginButton";
 import { FontAwesome } from "@expo/vector-icons";
 import { ListItem } from "react-native-elements";
-import GearsRatioTable from "../components/GearsRatioTable/GearsRatoTable";
+import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
+import { connect } from "react-redux";
 
 /**
  * oprazovka ulozenych
@@ -102,4 +103,11 @@ class SavedScreen extends Component {
   }
 }
 
-export default SavedScreen;
+
+const mapStateToProps = (state: { global: any }) => {
+  const { global } = state;
+  return { global };
+};
+
+export default connect(mapStateToProps)(SavedScreen);
+
