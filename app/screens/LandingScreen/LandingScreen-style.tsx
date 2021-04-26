@@ -16,6 +16,10 @@ const LandingScreenStyles = StyleSheet.create({
     saveBtn: {
       height: 50,
       backgroundColor: "tomato"
+    },
+    image: {
+      width: 60,
+      height: 60.
     }
   });
 

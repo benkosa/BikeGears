@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { SafeAreaView, View, ScrollView, Button } from "react-native";
+import { SafeAreaView, View, ScrollView } from "react-native";
 
+import { Image } from "react-native-elements";
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
 import styles from "./LandingScreen-style";
 import RNPickerSelect from "react-native-picker-select";
@@ -8,6 +9,8 @@ import Cassette from "../../data/casete";
 import Crank from "../../data/crank";
 import SaveModal from "../../components/SaveModal/SaveModal";
 import * as firebase from "firebase";
+import { connect } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
 
 /**
  * zakladna oprazovka, volenie atributov
@@ -94,6 +97,7 @@ class LandingScreen extends Component {
       this.setState({ showTable: false });
     }
   };
+
   /**
    * aktualne navolene data
    */
@@ -104,6 +108,7 @@ class LandingScreen extends Component {
     crank: "0",
     cassette: "0",
   };
+
   render() {
     const state = this.state;
     let showTable = state.showTable;
@@ -113,6 +118,10 @@ class LandingScreen extends Component {
         <ScrollView style={{ height: "100%" }}>
           <View style={styles.menu}>
             <View style={styles.menuItem}>
+              <Image
+                source={require("../../assets/icons/wheel.png")}
+                style={styles.image}
+              />
               <RNPickerSelect
                 onValueChange={(value: string) => {
                   actual.wheelSize = value;
@@ -120,9 +129,15 @@ class LandingScreen extends Component {
                 }}
                 placeholder={label("Select wheel size")}
                 items={wheelSize}
-              />
+              >
+                <AntDesign name="plussquareo" size={44} color="black" />
+              </RNPickerSelect>
             </View>
             <View style={styles.menuItem}>
+              <Image
+                source={require("../../assets/icons/crankset.png")}
+                style={styles.image}
+              />
               <RNPickerSelect
                 onValueChange={(value: string) => {
                   actual.crankSize = value;
@@ -130,7 +145,9 @@ class LandingScreen extends Component {
                 }}
                 placeholder={label("Select crank size")}
                 items={crankSize}
-              />
+                >
+                <AntDesign name="plussquareo" size={44} color="black" />
+              </RNPickerSelect>
               <RNPickerSelect
                 onValueChange={(value: string) => {
                   actual.crank = value;
@@ -139,9 +156,15 @@ class LandingScreen extends Component {
                 value={state.crank}
                 placeholder={label("Select crank type")}
                 items={state.crankSizes}
-              />
+                >
+                <AntDesign name="plussquareo" size={44} color="black" />
+              </RNPickerSelect>
             </View>
             <View style={styles.menuItem}>
+              <Image
+                source={require("../../assets/icons/cassette.png")}
+                style={styles.image}
+              />
               <RNPickerSelect
                 onValueChange={(value: string) => {
                   actual.cassetteSize = value;
@@ -149,7 +172,9 @@ class LandingScreen extends Component {
                 }}
                 placeholder={label("Select cassette size")}
                 items={cassetteSize}
-              />
+                >
+                <AntDesign name="plussquareo" size={44} color="black" />
+              </RNPickerSelect>
               <RNPickerSelect
                 onValueChange={(value: string) => {
                   actual.cassette = value;
@@ -158,7 +183,9 @@ class LandingScreen extends Component {
                 value={state.cassette}
                 placeholder={label("Select cassette type")}
                 items={state.cassetteSizes}
-              />
+                >
+                <AntDesign name="plussquareo" size={44} color="black" />
+              </RNPickerSelect>
             </View>
           </View>
           {showTable && (
@@ -175,7 +202,12 @@ class LandingScreen extends Component {
   }
 }
 
-export default LandingScreen;
+const mapStateToProps = (state: { global: any }) => {
+  const { global } = state;
+  return { global };
+};
+
+export default connect(mapStateToProps)(LandingScreen);
 
 const wheelSize = [
   { label: "26", value: "26" },
