@@ -1,19 +1,16 @@
 interface SaveModalLang {
-    SAVE_BTN: string,
-    SAVE_SIGN_BTN: string,
-    SETUP_NAME: string
+    NOTICE: string,
+    SIGN_IN: string
 }
 
 const en: SaveModalLang = {
-    SAVE_BTN: "Save",
-    SETUP_NAME: "Setup name",
-    SAVE_SIGN_BTN:"Sign in and save",
+    NOTICE: "You must log in before saving",
+    SIGN_IN: "Sign in with google"
 };
 
 const sk: SaveModalLang = {
-    SAVE_BTN: "Uložiť",
-    SETUP_NAME: "Názov radenia",
-    SAVE_SIGN_BTN: "Prihlásiť sa a uložiť"
+    NOTICE: "Pred uložením sa musíte prihlásiť",
+    SIGN_IN: "Prihlásiť sa cez google"
 };
 
 const language: { [key: string]: SaveModalLang } = {

@@ -9,6 +9,9 @@ import { ListItem } from "react-native-elements";
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
 import { connect } from "react-redux";
 
+import styles from './SavedScreen-style';
+import language from './SavedScreen-lang';
+
 /**
  * oprazovka ulozenych
  */
@@ -59,30 +62,35 @@ class SavedScreen extends Component {
   firestoreUnsubscribe: firebase.Unsubscribe = () => {};
 
   render() {
+
+    const styleId = +this.props.global.selectedApirence;
+    const style = styles[styleId];
+    const lang = language[this.props.global.appLang];
+
     return (
       <SafeAreaView>
         <ScrollView style={{ height: "100%" }}>
           {!this.state.isLogged && (
             <>
-              <Text h4>You must log in before saving</Text>
-              <LoginButton title="Sign in with google"></LoginButton>
+              <Text style={[style.text, style.notice]}>{lang.NOTICE}</Text>
+              <LoginButton title={lang.SIGN_IN}></LoginButton>
             </>
           )}
           {this.state.isLogged &&
             this.state.dbSetup.map((item: any) => (
               <View key={item.id}>
                 <ListItem
+                  containerStyle={style.background}
                   bottomDivider
                   onPress={() => {
-                    console.log("test");
                     item.showTable = !item.showTable;
                     this.forceUpdate();
                   }}
                 >
-                  <FontAwesome name={item.icon} size={24} />
+                  <FontAwesome name={item.icon} size={24} color={styleId ? "white" : "black"} />
                   <ListItem.Content>
-                    <ListItem.Title>{item.title}</ListItem.Title>
-                    <ListItem.Subtitle>
+                    <ListItem.Title style={style.text}>{item.title}</ListItem.Title>
+                    <ListItem.Subtitle style={style.text}>
                       {item.setup.crankSize + "x" + item.setup.cassetteSize}
                     </ListItem.Subtitle>
                   </ListItem.Content>
