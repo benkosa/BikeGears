@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { View } from "react-native";
 import {
   Table,
@@ -7,26 +7,31 @@ import {
   Rows,
   Col,
 } from "react-native-table-component";
+import { connect } from "react-redux";
 
 import styles from "./GearsRatioTable-style";
 
 /**
  * komponent zobrazi tabulku gear ratio podla
  * navolenych parametrov
- * @param props 
- * @returns 
+ * @param props
+ * @returns
  */
-function GearsRatioTable(props: GearsRatioTableProps) {
+class GearsRatioTable extends Component<GearsRatioTableProps> {
+  constructor(props: GearsRatioTableProps) {
+    super(props);
+    this.state = {};
+  }
   /**
    * Funkcia vypocita gear ratio podla navolenych
    * parametrov
-   * 
-   * @param wheelSize 
-   * @param crankS 
-   * @param caseteS 
-   * @returns 
+   *
+   * @param wheelSize
+   * @param crankS
+   * @param caseteS
+   * @returns
    */
-  const calculateGearsRatio = (
+  calculateGearsRatio = (
     wheelSize: number,
     crankS: string,
     caseteS: string
@@ -44,72 +49,80 @@ function GearsRatioTable(props: GearsRatioTableProps) {
     return gearRatio;
   };
 
-  const gearRatio = calculateGearsRatio(
-    props.wheelSize,
-    props.crank,
-    props.cassette
-  );
-  const max = gearRatio[0][gearRatio[0].length - 1];
-  const min = gearRatio[gearRatio.length - 1][0];
+  gearRatio = this.calculateGearsRatio(this.props.wheelSize, this.props.crank, this.props.cassette);
+  max = this.gearRatio[0][this.gearRatio[0].length - 1];
+  min = this.gearRatio[this.gearRatio.length - 1][0];
 
   /**
    * pripravene date pre tabulku
    */
-  const table: GearsRatioTable = {
-    tableHead: [""].concat(props.crank.split("-")),
-    tableTitle: props.cassette.split("-"),
-    tableData: gearRatio,
+  table: GearsRatioTableData = {
+    tableHead: [""].concat(this.props.crank.split("-")),
+    tableTitle: this.props.cassette.split("-"),
+    tableData: this.gearRatio,
 
     table2Title: ["Max", "Min"],
-    table2Data: [[max], [min]],
+    table2Data: [[this.max], [this.min]],
   };
 
-  return (
-    <>
-      <View style={styles.container}>
-        <Table borderStyle={{ borderWidth: 1 }}>
-          <Row
-            data={table.tableHead}
-            flexArr={[1, 2, 1, 1]}
-            style={styles.head}
-            textStyle={styles.textBold}
-          />
-          <TableWrapper style={styles.wrapper}>
-            <Col
-              data={table.tableTitle}
-              style={styles.title}
-              heightArr={[28, 28]}
-              textStyle={styles.textBold}
+  
+
+  render() {
+    const styleId = +this.props.global.selectedApirence;
+    const style = styles[styleId];
+
+    return (
+      <View style={style.mainContainer}>
+        <View style={style.container}>
+          <Table borderStyle={{ borderWidth: 1 }}>
+            <Row
+              data={this.table.tableHead}
+              flexArr={[1, 2, 1, 1]}
+              style={style.head}
+              textStyle={style.textBold}
             />
-            <Rows
-              data={table.tableData}
-              flexArr={[2, 1, 1]}
-              style={styles.row}
-              textStyle={styles.text}
-            />
-          </TableWrapper>
-        </Table>
+            <TableWrapper style={style.wrapper}>
+              <Col
+                data={this.table.tableTitle}
+                style={style.title}
+                heightArr={[28, 28]}
+                textStyle={style.textBold}
+              />
+              <Rows
+                data={this.table.tableData}
+                flexArr={[2, 1, 1]}
+                style={style.row}
+                textStyle={style.text}
+              />
+            </TableWrapper>
+          </Table>
+        </View>
+        <View style={style.container2}>
+          <Table borderStyle={{ borderWidth: 1 }}>
+            <TableWrapper style={style.wrapper}>
+              <Col
+                data={this.table.table2Title}
+                style={style.title}
+                textStyle={style.textBold}
+                heightArr={[28, 28]}
+              />
+              <Rows
+                data={this.table.table2Data}
+                flexArr={[2, 1, 1]}
+                style={style.row}
+                textStyle={style.text}
+              />
+            </TableWrapper>
+          </Table>
+        </View>
       </View>
-      <View style={styles.container}>
-        <Table borderStyle={{ borderWidth: 1 }}>
-          <TableWrapper style={styles.wrapper}>
-            <Col
-              data={table.table2Title}
-              style={styles.title}
-              textStyle={styles.textBold}
-              heightArr={[28, 28]}
-            />
-            <Rows
-              data={table.table2Data}
-              flexArr={[2, 1, 1]}
-              style={styles.row}
-              textStyle={styles.text}
-            />
-          </TableWrapper>
-        </Table>
-      </View>
-    </>
-  );
+    );
+  }
 }
 
-export default GearsRatioTable;
+const mapStateToProps = (state: { global: any }) => {
+  const { global } = state;
+  return { global };
+};
+
+export default connect(mapStateToProps)(GearsRatioTable);

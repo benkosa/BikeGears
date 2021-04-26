@@ -1,4 +1,4 @@
-interface GearsRatioTable {
+interface GearsRatioTableData {
   tableHead: Array<string>;
   tableTitle: Array<string>;
   tableData: Array<Array<number>>;
