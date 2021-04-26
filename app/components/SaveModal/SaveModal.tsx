@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Modal,
-  StyleSheet,
   Text,
   Pressable,
   View,
@@ -12,12 +11,16 @@ import {
 import LoginButton from "../LoginButton/LoginButton";
 import * as firebase from "firebase";
 
+import styles from "./SaveModal-style";
+import darkc from "../../colors";
+import { connect } from "react-redux";
+
 class SaveModal extends Component<saveModalProps> {
   constructor(props: saveModalProps) {
     super(props);
     this.state = {
       modalVisible: false,
-      text: ""
+      text: "",
     };
   }
 
@@ -25,10 +28,13 @@ class SaveModal extends Component<saveModalProps> {
     const token = firebase.auth().currentUser?.uid;
 
     if (token) {
-      firebase.firestore().collection("setup_"+token).add({
-        title: this.state.text,
-        setup: this.props.setup,
-      });
+      firebase
+        .firestore()
+        .collection("setup_" + token)
+        .add({
+          title: this.state.text,
+          setup: this.props.setup,
+        });
     }
   };
 
@@ -38,6 +44,8 @@ class SaveModal extends Component<saveModalProps> {
 
   render() {
     const { modalVisible } = this.state;
+    const styleId = +this.props.global.selectedApirence;
+    const style = styles[styleId];
 
     return (
       <View>
@@ -51,18 +59,18 @@ class SaveModal extends Component<saveModalProps> {
           }}
         >
           <TouchableOpacity
-            style={styles.modalContainer}
+            style={style.modalContainer}
             onPress={() => {
               this.setState({ modalVisible: false });
             }}
           >
             <TouchableOpacity
-              style={styles.modal}
+              style={style.modal}
               onPress={() => console.log("do nothing")}
               activeOpacity={1}
             >
               {/**modal content */}
-              <View style={styles.modalView}>
+              <View style={style.modalView}>
                 <TextInput
                   style={{ height: 40 }}
                   placeholder="Setup name"
@@ -94,66 +102,19 @@ class SaveModal extends Component<saveModalProps> {
           </TouchableOpacity>
         </Modal>
         <Pressable
-          style={[styles.button, styles.buttonOpen]}
+          style={[style.button, style.buttonOpen]}
           onPress={() => this.setModalVisible(true)}
         >
-          <Text style={styles.textStyle}>Save</Text>
+          <Text style={style.textStyle}>Save</Text>
         </Pressable>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modal: {
-    width: "80%",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-});
+const mapStateToProps = (state: { global: any }) => {
+  const { global } = state;
+  return { global };
+};
 
-export default SaveModal;
+export default connect(mapStateToProps)(SaveModal);
