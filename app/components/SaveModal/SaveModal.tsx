@@ -67,7 +67,8 @@ class SaveModal extends Component<saveModalProps> {
               {/**modal content */}
               <View style={style.modalView}>
                 <TextInput
-                  style={{ height: 40 }}
+                  style={style.textInput}
+                  placeholderTextColor={styleId ? darkc.light : undefined}
                   placeholder={lang.SETUP_NAME}
                   onChangeText={(value) => this.setState({ text: value })}
                   defaultValue={this.state.text}
@@ -88,6 +89,7 @@ class SaveModal extends Component<saveModalProps> {
                       this.setModalVisible(!modalVisible);
                       this.handleSend();
                     }}
+                    disabledStyle={style.disabledbutton}
                     title={lang.SAVE_BTN}
                     disabled={this.state.text == ""}
                   />

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import darkc from "../../colors";
 
 const light = StyleSheet.create({
   modalContainer: {
@@ -8,12 +9,6 @@ const light = StyleSheet.create({
   },
   modal: {
     width: "80%",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -30,22 +25,25 @@ const light = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
+  disabledbutton: {},
+  textInput: {
+    height: 40
+  }
 });
 
 const dark = StyleSheet.create({
   ...light,
+  modalView: {
+    ...light.modalView,
+    backgroundColor: darkc.secondary_shade
+  },
+  disabledbutton: {
+    backgroundColor: darkc.primary_shade
+  },
+  textInput: {
+    ...light.textInput,
+    color: darkc.light
+  },
 });
 
-export default [dark, light];
+export default [light, dark];
