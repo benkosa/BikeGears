@@ -98,7 +98,7 @@ class LoginButton extends Component<LoginButtonProps> {
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
-        //androidClientId: YOUR_CLIENT_ID_HERE,
+        androidClientId: "1098564175858-i1kghu3kauvg3l23hgd2b1n2cfe2ff48.apps.googleusercontent.com",
         //behavior: 'web',
         iosClientId:
           "1098564175858-pt3i4vmamavcqvlh6hnd6aid36cij00t.apps.googleusercontent.com",

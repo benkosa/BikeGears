@@ -16,7 +16,8 @@ const light = StyleSheet.create({
   border: {},
   innerBorder: {},
   profileContainer: {
-    height: 150,
+    paddingBottom: 20,
+    paddingTop: 20
   },
   centerText: {
     textAlign: "center"
