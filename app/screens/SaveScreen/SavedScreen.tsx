@@ -24,6 +24,11 @@ class SavedScreen extends Component {
     };
   }
 
+
+  /**
+   * sunscribe na uzivatelove ulozene prevody
+   * v databaze
+   */
   getSetup = () => {
     const token = firebase.auth().currentUser?.uid;
     if (token) {
@@ -43,6 +48,11 @@ class SavedScreen extends Component {
     }
   };
 
+
+  /**
+   * subscurbe na auth state
+   * ziskanie dat
+   */
   componentDidMount() {
     //subscribe na firebase auth
     this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {

@@ -18,6 +18,9 @@ class SaveModal extends Component<saveModalProps> {
     };
   }
 
+  /**
+   * ulozi navolene prevody na server
+   */
   handleSend = async () => {
     const token = firebase.auth().currentUser?.uid;
 
@@ -31,6 +34,7 @@ class SaveModal extends Component<saveModalProps> {
         });
     }
   };
+
 
   setModalVisible = (visible: boolean) => {
     this.setState({ modalVisible: visible });
@@ -61,7 +65,7 @@ class SaveModal extends Component<saveModalProps> {
           >
             <TouchableOpacity
               style={style.modal}
-              onPress={() => console.log("do nothing")}
+              onPress={() => {/**do nothing */}}
               activeOpacity={1}
             >
               {/**modal content */}

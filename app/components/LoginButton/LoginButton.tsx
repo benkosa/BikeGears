@@ -13,6 +13,14 @@ class LoginButton extends Component<LoginButtonProps> {
     super(props);
     this.state = {};
   }
+
+  /**
+   * skopirovane z dokumentacie
+   * https://firebase.google.com/docs/auth/web/google-signin#expandable-2
+   * @param googleUser 
+   * @param firebaseUser 
+   * @returns 
+   */
   isUserEqual = (googleUser: any, firebaseUser: any) => {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
@@ -30,8 +38,14 @@ class LoginButton extends Component<LoginButtonProps> {
     return false;
   };
 
+
+  /**
+   * skopirovane z dokumentacie
+   * https://firebase.google.com/docs/auth/web/google-signin#expandable-2
+   * @param googleUser 
+   */
   onSignIn = (googleUser: any) => {
-    console.log("Google Auth Response", googleUser);
+    //console.log("Google Auth Response", googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
       unsubscribe();
@@ -49,7 +63,7 @@ class LoginButton extends Component<LoginButtonProps> {
           .auth()
           .signInWithCredential(credential)
           .then((result) => {
-            console.log("user signed in");
+            //console.log("user signed in");
             if (result.additionalUserInfo?.isNewUser) {
               //zapiseme si noveho usera do firebase database
             }
@@ -70,11 +84,17 @@ class LoginButton extends Component<LoginButtonProps> {
             // ...
           });
       } else {
-        console.log("User already signed-in Firebase.");
+        //console.log("User already signed-in Firebase.");
       }
     });
   };
 
+
+  /**
+   * skopirovane z dokumentacie
+   * https://firebase.google.com/docs/auth/web/google-signin#expandable-2
+   * @returns 
+   */
   signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
@@ -96,9 +116,13 @@ class LoginButton extends Component<LoginButtonProps> {
     }
   };
 
+
+  /**
+   * ulozsi data uzivatela ktory sa prihlasuje prvy krat
+   * @param data 
+   */
   handleSendNewUserData = async (data: any) => {
     const token = firebase.auth().currentUser?.uid;
-
     if (token) {
       firebase.firestore().collection("profile").doc(token).set({
         name: data.name,

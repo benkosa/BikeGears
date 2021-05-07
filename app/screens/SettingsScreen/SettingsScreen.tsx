@@ -6,7 +6,13 @@ import LoginButton from "../../components/LoginButton/LoginButton";
 import language from "./SettingsScreen-lang";
 
 import { connect } from "react-redux";
-import { ButtonGroup, Button, ListItem } from "react-native-elements";
+import {
+  ButtonGroup,
+  Button,
+  ListItem,
+  Text,
+  Avatar,
+} from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import {
@@ -14,7 +20,7 @@ import {
   setHomeScreen,
   setLanguage,
 } from "../../store/GlobalActions";
-import Style from "./SettingsScreen-style"
+import Style from "./SettingsScreen-style";
 
 /**
  * oprazovka nastaveni
@@ -27,33 +33,39 @@ class SettingsScreen extends Component {
       selectedLanguage: 0,
       selectedHomeScreen: 1,
       selectedApirence: 0,
+      name: "",
+      email: "",
+      picture:
+        "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
     };
     //this.getProfile();
   }
 
+  /**
+   * ulozi jazyk do asyncStorage a do store
+   * @param selectedLanguage
+   */
   updateLanguage(selectedLanguage: number) {
     this.setState({ selectedLanguage });
     AsyncStorage.setItem("selectedLanguage", selectedLanguage + "");
     this.props.setLanguage(selectedLanguage);
   }
 
-  updateHomeScreen(selectedHomeScreen: number) {
-    this.setState({ selectedHomeScreen });
-    AsyncStorage.setItem("selectedHomeScreen", selectedHomeScreen + "");
-    this.props.setHomeScreen(selectedHomeScreen);
-    this.forceUpdate();
-  }
-
+  /**
+   * ulozi vzhlad do asyncStorage a do store
+   * @param selectedLanguage
+   */
   updateApirence(selectedApirence: number) {
     this.setState({ selectedApirence });
     AsyncStorage.setItem("selectedApirence", selectedApirence + "");
     this.props.setApirence(selectedApirence);
   }
 
+  /**
+   * ziska informacie o prihlaenom uzivatelovi
+   */
   getProfile = () => {
-    console.log("bol som tu");
     const token = firebase.auth().currentUser?.uid;
-    console.log(token);
     if (token) {
       firebase
         .firestore()
@@ -61,14 +73,22 @@ class SettingsScreen extends Component {
         .doc(token)
         .get()
         .then((doc) => {
-          console.log(doc.data());
+          this.setState({
+            name: doc.data()?.name,
+            email: doc.data()?.emal,
+            picture: doc.data()?.picture,
+          });
         });
     }
   };
 
+  /**
+   * subscribe na state + ziskanie dat o uzivatelovi
+   */
   componentDidMount() {
     this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isLogged: user != null });
+      this.getProfile();
     });
   }
 
@@ -86,13 +106,34 @@ class SettingsScreen extends Component {
 
     return (
       <SafeAreaView style={Style[a].container}>
-      {a == 0 && <StatusBar  barStyle="dark-content" translucent={true} />}
-      {a != 0 && <StatusBar  barStyle="light-content" translucent={true} />}
+        {a == 0 && <StatusBar barStyle="dark-content" translucent={true} />}
+        {a != 0 && <StatusBar barStyle="light-content" translucent={true} />}
         {!state.isLogged && <LoginButton title={language[lang].SIGN_IN} />}
+
+        {state.isLogged && (
+          <View style={Style[a].profileContainer}>
+            <Avatar
+              size="large"
+              rounded
+              source={{
+                uri: state.picture,
+              }}
+              containerStyle={Style[a].centerAvatar}
+            />
+            <Text h3 style={[Style[a].text, Style[a].centerText]}>
+              {state.name}
+            </Text>
+            <Text h4 style={[Style[a].text, Style[a].centerText]}>
+              {state.email}
+            </Text>
+          </View>
+        )}
 
         <ListItem bottomDivider containerStyle={Style[a].background}>
           <ListItem.Content>
-            <ListItem.Title style={Style[a].text}>{language[lang].LANG_BTN_TITLE}</ListItem.Title>
+            <ListItem.Title style={Style[a].text}>
+              {language[lang].LANG_BTN_TITLE}
+            </ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateLanguage(value)}
               selectedIndex={globalStore.selectedLanguage}
@@ -108,23 +149,8 @@ class SettingsScreen extends Component {
         <ListItem bottomDivider containerStyle={Style[a].background}>
           <ListItem.Content>
             <ListItem.Title style={Style[a].text}>
-              {language[lang].HOMESCREEN_BTN_TITLE}
+              {language[lang].APIRENCE_BTN_TITLE}
             </ListItem.Title>
-            <ButtonGroup
-              onPress={(value) => this.updateHomeScreen(value)}
-              selectedIndex={globalStore.selectedHomeScreen}
-              buttons={language[lang].HOMESCREEN_BTN}
-              buttonStyle={Style[a].buttonPasive}
-              selectedButtonStyle={Style[a].button}
-              containerStyle={Style[a].border}
-              innerBorderStyle={Style[a].innerBorder}
-            />
-          </ListItem.Content>
-        </ListItem>
-
-        <ListItem bottomDivider containerStyle={Style[a].background}>
-          <ListItem.Content>
-            <ListItem.Title style={Style[a].text}>{language[lang].APIRENCE_BTN_TITLE}</ListItem.Title>
             <ButtonGroup
               onPress={(value) => this.updateApirence(value)}
               selectedIndex={globalStore.selectedApirence}
@@ -138,9 +164,7 @@ class SettingsScreen extends Component {
         </ListItem>
 
         {state.isLogged && (
-          <View
-            style={Style[a].signOutContainer}
-          >
+          <View style={Style[a].signOutContainer}>
             <Button
               title={language[lang].SIGN_OUT}
               onPress={() => firebase.auth().signOut()}

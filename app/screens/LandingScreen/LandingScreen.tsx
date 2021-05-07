@@ -31,6 +31,10 @@ class LandingScreen extends Component {
     };
   }
 
+
+  /**
+   * subsribe na auth state
+   */
   componentDidMount() {
     this.firebaseUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isLogged: user != null });
@@ -110,6 +114,12 @@ class LandingScreen extends Component {
     cassette: "0",
   };
 
+
+  /**
+   * 
+   * @param casete 
+   * @returns skratenu verziu label pre kazetu
+   */
   caseteLabel = (casete: string): string => {
     if(casete == "0") return "";
 

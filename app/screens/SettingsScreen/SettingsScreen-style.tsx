@@ -15,9 +15,19 @@ const light = StyleSheet.create({
   buttonPasive: {},
   border: {},
   innerBorder: {},
+  profileContainer: {
+    height: 150,
+  },
+  centerText: {
+    textAlign: "center"
+  },
+  centerAvatar: {
+    alignSelf: "center"
+  }
 });
 
 const dark = StyleSheet.create({
+  ...light,
   container: {
     flex: 1,
     backgroundColor: darkc.primary,
