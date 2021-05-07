@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, View, ScrollView } from "react-native";
+import { SafeAreaView, View, ScrollView, StatusBar } from "react-native";
 
 import { Image, Text } from "react-native-elements";
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
@@ -30,7 +30,6 @@ class LandingScreen extends Component {
       isLogged: true,
     };
   }
-
 
   /**
    * subsribe na auth state
@@ -114,14 +113,13 @@ class LandingScreen extends Component {
     cassette: "0",
   };
 
-
   /**
-   * 
-   * @param casete 
+   *
+   * @param casete
    * @returns skratenu verziu label pre kazetu
    */
   caseteLabel = (casete: string): string => {
-    if(casete == "0") return "";
+    if (casete == "0") return "";
 
     const caseteArray = casete.split("-");
     if (caseteArray.length <= 2) {
@@ -138,6 +136,8 @@ class LandingScreen extends Component {
     const styles = style[styleId];
     return (
       <SafeAreaView>
+        {styleId == 0 && <StatusBar barStyle="dark-content" />}
+        {styleId != 0 && <StatusBar barStyle="light-content" />}
         <ScrollView style={{ height: "100%" }}>
           <View style={styles.menu}>
             {/** vyber velkosti kolesa */}
@@ -158,7 +158,11 @@ class LandingScreen extends Component {
                     <Text style={styles.label}>
                       {actual.wheelSize != "0" ? actual.wheelSize : ""}
                     </Text>
-                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                    <AntDesign
+                      name="plussquareo"
+                      size={44}
+                      color={styleId ? darkc.light : "black"}
+                    />
                   </View>
                 </RNPickerSelect>
               </View>
@@ -182,7 +186,11 @@ class LandingScreen extends Component {
                     <Text style={styles.label}>
                       {actual.crankSize != "0" ? actual.crankSize : ""}
                     </Text>
-                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                    <AntDesign
+                      name="plussquareo"
+                      size={44}
+                      color={styleId ? darkc.light : "black"}
+                    />
                   </View>
                 </RNPickerSelect>
               </View>
@@ -200,7 +208,11 @@ class LandingScreen extends Component {
                     <Text style={styles.label}>
                       {actual.crank != "0" ? actual.crank : ""}
                     </Text>
-                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                    <AntDesign
+                      name="plussquareo"
+                      size={44}
+                      color={styleId ? darkc.light : "black"}
+                    />
                   </View>
                 </RNPickerSelect>
               </View>
@@ -224,7 +236,11 @@ class LandingScreen extends Component {
                     <Text style={styles.label}>
                       {actual.cassetteSize != "0" ? actual.cassetteSize : ""}
                     </Text>
-                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                    <AntDesign
+                      name="plussquareo"
+                      size={44}
+                      color={styleId ? darkc.light : "black"}
+                    />
                   </View>
                 </RNPickerSelect>
               </View>
@@ -243,7 +259,11 @@ class LandingScreen extends Component {
                     <Text style={styles.label}>
                       {this.caseteLabel(actual.cassette)}
                     </Text>
-                    <AntDesign name="plussquareo" size={44} color={styleId ? darkc.light:"black"} />
+                    <AntDesign
+                      name="plussquareo"
+                      size={44}
+                      color={styleId ? darkc.light : "black"}
+                    />
                   </View>
                 </RNPickerSelect>
               </View>
@@ -256,7 +276,11 @@ class LandingScreen extends Component {
               cassette={state.cassette}
             ></GearsRatioTable>
           )}
-          <SaveModal setup={actual} isLogged={state.isLogged} showButton={showTable}></SaveModal>
+          <SaveModal
+            setup={actual}
+            isLogged={state.isLogged}
+            showButton={showTable}
+          ></SaveModal>
         </ScrollView>
       </SafeAreaView>
     );

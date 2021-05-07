@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, StatusBar, View } from "react-native";
 import { Button, Text } from "react-native-elements";
 
 import firebase from "firebase";
@@ -96,6 +96,8 @@ class SavedScreen extends Component {
 
     return (
       <SafeAreaView>
+        {styleId == 0 && <StatusBar barStyle="dark-content" />}
+        {styleId != 0 && <StatusBar barStyle="light-content" />}
         <ScrollView style={{ height: "100%" }}>
           {!this.state.isLogged && (
             <>

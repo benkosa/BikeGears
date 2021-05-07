@@ -4,9 +4,9 @@
     "slug": "BikeGears",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/icons/crankset.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./app/assets/icons/cassette.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/benkosa/BikeGears"
   }
 }

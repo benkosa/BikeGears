@@ -106,8 +106,8 @@ class SettingsScreen extends Component {
 
     return (
       <SafeAreaView style={Style[a].container}>
-        {a == 0 && <StatusBar barStyle="dark-content" translucent={true} />}
-        {a != 0 && <StatusBar barStyle="light-content" translucent={true} />}
+        {a == 0 && <StatusBar barStyle="dark-content" />}
+        {a != 0 && <StatusBar barStyle="light-content" />}
         {!state.isLogged && <LoginButton title={language[lang].SIGN_IN} />}
 
         {state.isLogged && (
