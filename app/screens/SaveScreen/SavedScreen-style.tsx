@@ -9,6 +9,9 @@ const light = StyleSheet.create({
         textAlign: "center",
         fontSize: 16
     },
+    deleteButton: {
+      backgroundColor: "#dc3545",
+    }
 });
 
 const dark = StyleSheet.create({

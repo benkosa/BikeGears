@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { Text } from 'react-native-elements';
+import { Button, Text } from "react-native-elements";
 
 import firebase from "firebase";
 import LoginButton from "../../components/LoginButton/LoginButton";
@@ -9,8 +9,8 @@ import { ListItem } from "react-native-elements";
 import GearsRatioTable from "../../components/GearsRatioTable/GearsRatoTable";
 import { connect } from "react-redux";
 
-import styles from './SavedScreen-style';
-import language from './SavedScreen-lang';
+import styles from "./SavedScreen-style";
+import language from "./SavedScreen-lang";
 
 /**
  * oprazovka ulozenych
@@ -24,9 +24,8 @@ class SavedScreen extends Component {
     };
   }
 
-
   /**
-   * sunscribe na uzivatelove ulozene prevody
+   * subscribe na uzivatelove ulozene prevody
    * v databaze
    */
   getSetup = () => {
@@ -48,6 +47,25 @@ class SavedScreen extends Component {
     }
   };
 
+  /**
+   * zmaze dany prevod z databazy
+   */
+  removeSetup = (setupId: string) => {
+    const token = firebase.auth().currentUser?.uid;
+    if (token) {
+      firebase
+        .firestore()
+        .collection("setup_" + token)
+        .doc(setupId)
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+    }
+  };
 
   /**
    * subscurbe na auth state
@@ -72,7 +90,6 @@ class SavedScreen extends Component {
   firestoreUnsubscribe: firebase.Unsubscribe = () => {};
 
   render() {
-
     const styleId = +this.props.global.selectedApirence;
     const style = styles[styleId];
     const lang = language[this.props.global.appLang];
@@ -97,9 +114,15 @@ class SavedScreen extends Component {
                     this.forceUpdate();
                   }}
                 >
-                  <FontAwesome name={item.icon} size={24} color={styleId ? "white" : "black"} />
+                  <FontAwesome
+                    name={item.icon}
+                    size={24}
+                    color={styleId ? "white" : "black"}
+                  />
                   <ListItem.Content>
-                    <ListItem.Title style={style.text}>{item.title}</ListItem.Title>
+                    <ListItem.Title style={style.text}>
+                      {item.title}
+                    </ListItem.Title>
                     <ListItem.Subtitle style={style.text}>
                       {item.setup.crankSize + "x" + item.setup.cassetteSize}
                     </ListItem.Subtitle>
@@ -107,11 +130,19 @@ class SavedScreen extends Component {
                   <ListItem.Chevron />
                 </ListItem>
                 {item.showTable && (
-                  <GearsRatioTable
-                    wheelSize={1.04}
-                    crank={item.setup.crank}
-                    cassette={item.setup.cassette}
-                  ></GearsRatioTable>
+                  <View>
+                    <GearsRatioTable
+                      wheelSize={1}
+                      crank={item.setup.crank}
+                      cassette={item.setup.cassette}
+                    ></GearsRatioTable>
+                    <Button
+                      style={style.deleteButton}
+                      buttonStyle={style.deleteButton}
+                      title={lang.DELETE_BTN}
+                      onPress={() => this.removeSetup(item.id)}
+                    ></Button>
+                  </View>
                 )}
               </View>
             ))}
@@ -121,11 +152,9 @@ class SavedScreen extends Component {
   }
 }
 
-
 const mapStateToProps = (state: { global: any }) => {
   const { global } = state;
   return { global };
 };
 
 export default connect(mapStateToProps)(SavedScreen);
-
