@@ -13,6 +13,8 @@ import * as firebase from "firebase";
 import { connect } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 
+import language from "./LandingScreen-lang";
+
 /**
  * zakladna oprazovka, volenie atributov
  * pre vypocet gear ratia
@@ -134,6 +136,7 @@ class LandingScreen extends Component {
     const actual = this.actual;
     const styleId = +this.props.global.selectedApirence;
     const styles = style[styleId];
+    const lang = language[this.props.global.appLang]
     return (
       <SafeAreaView>
         {styleId == 0 && <StatusBar barStyle="dark-content" />}
@@ -142,10 +145,18 @@ class LandingScreen extends Component {
           <View style={styles.menu}>
             {/** vyber velkosti kolesa */}
             <View style={styles.menuItem}>
-              <Image
-                source={require("../../assets/icons/wheel.png")}
-                style={styles.image}
-              />
+              {styleId == 0 && (
+                <Image
+                  source={require("../../assets/icons/wheel0.png")}
+                  style={styles.image}
+                />
+              )}
+              {styleId != 0 && (
+                <Image
+                  source={require("../../assets/icons/wheel1.png")}
+                  style={styles.image}
+                />
+              )}
               <View>
                 <RNPickerSelect
                   onValueChange={(value: string) => {
@@ -169,10 +180,18 @@ class LandingScreen extends Component {
             </View>
             {/** vyber velkosti stredu */}
             <View style={styles.menuItem}>
-              <Image
-                source={require("../../assets/icons/crankset.png")}
-                style={styles.image}
-              />
+              {styleId == 0 && (
+                <Image
+                  source={require("../../assets/icons/crankset0.png")}
+                  style={styles.image}
+                />
+              )}
+              {styleId != 0 && (
+                <Image
+                  source={require("../../assets/icons/crankset1.png")}
+                  style={styles.image}
+                />
+              )}
               <View>
                 <RNPickerSelect
                   onValueChange={(value: string) => {
@@ -219,10 +238,18 @@ class LandingScreen extends Component {
             </View>
             {/** vyber velkosti kazety */}
             <View style={styles.menuItem}>
-              <Image
-                source={require("../../assets/icons/cassette.png")}
-                style={styles.image}
-              />
+              {styleId == 0 && (
+                <Image
+                  source={require("../../assets/icons/cassette0.png")}
+                  style={styles.image}
+                />
+              )}
+              {styleId != 0 && (
+                <Image
+                  source={require("../../assets/icons/cassette1.png")}
+                  style={styles.image}
+                />
+              )}
               <View>
                 <RNPickerSelect
                   onValueChange={(value: string) => {
@@ -275,6 +302,17 @@ class LandingScreen extends Component {
               crank={state.crank}
               cassette={state.cassette}
             ></GearsRatioTable>
+          )}
+          {!showTable && (
+            <View style={styles.notice}>
+              <Text style={styles.label}>{lang.NOTICE1}</Text>
+              <AntDesign
+                name="plussquareo"
+                size={44}
+                color={styleId ? darkc.light : "black"}
+              />
+              <Text style={styles.label}>{lang.NOTICE2}</Text>
+            </View>
           )}
           <SaveModal
             setup={actual}

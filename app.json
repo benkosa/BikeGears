@@ -4,9 +4,9 @@
     "slug": "BikeGears",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./app/assets/icons/crankset.png",
+    "icon": "./app/assets/icons/crankset1.png",
     "splash": {
-      "image": "./app/assets/icons/cassette.png",
+      "image": "./app/assets/icons/cassette1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -27,8 +27,10 @@ const light = StyleSheet.create({
       paddingTop: 13,
       fontWeight: "bold",
     },
-    text: {
-
+    notice: {
+      flexDirection: "row",
+      alignSelf: "center",
+      paddingTop: 40
     }
   });
 
